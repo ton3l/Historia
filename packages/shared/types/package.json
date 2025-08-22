@@ -1,0 +1,13 @@
+{
+  "name": "@historia/types",
+  "module": "index.ts",
+  "type": "module",
+  "types": "index.d.ts",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
