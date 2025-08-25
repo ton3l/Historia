@@ -1,3 +1,4 @@
+import ValidationException from "../exceptions/validation.exception";
 import { v4 as uuidv4 } from "uuid";
 import * as argon2 from "argon2";
 
@@ -12,7 +13,7 @@ export type RestoreUserProps = Omit<CreateUserProps, 'rawPassword'> & {
     password: string;
 }
 
-class User {
+export default class User {
     private id!: string;
     public name!: string;
     public email!: string;
@@ -23,9 +24,7 @@ class User {
     public static async create ( props: CreateUserProps ): Promise<User> {
         const { name, email, rawPassword } = props;
 
-        if (!User.validateEmail(email)){
-            throw new Error('Invalid email format');
-        }
+        User.validateEmail(email);
 
         const id = uuidv4();
 
@@ -57,22 +56,19 @@ class User {
         return user;
     }
 
-    private static validateEmail (email: string): boolean {
+    private static validateEmail (email: string): void {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
+
+        if (!emailRegex.test(email)){
+            throw new ValidationException('Invalid email format', true, email);
+        }
     }
 
     private async setPassword ( rawPassword: string ): Promise<void> {
         if (rawPassword.length < 8) {
-            throw new Error('Password must be at least 8 characters long');
+            throw new ValidationException('Password must be at least 8 characters long', false);
         }
 
-        this.password = await argon2.hash(rawPassword)
-        .catch((err) => {
-            console.error('Error hashing password:\n', err);
-            throw new Error('Error hashing password');
-        });
+        this.password = await argon2.hash(rawPassword);
     }
 }
-
-export default User;
