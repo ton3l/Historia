@@ -26,8 +26,8 @@ export default class Board {
         const board = new Board();
 
         Object.assign(board, {
-            title,
             id: null, // autoincrement ID
+            title,
             updatedAt: new Date()
         });
 
