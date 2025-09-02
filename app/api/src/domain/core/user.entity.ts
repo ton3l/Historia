@@ -1,31 +1,29 @@
 import ValidationException from '../exceptions/validation.exception';
 import { v4 as uuidv4 } from 'uuid';
-import type IEncryptor from '../interfaces/encryption.interface';
-import Encryptor from '../../infrastructure/encryption/encryptor.interface';
+import type IEncryptor from '../interfaces/encryptor.interface';
 
-export type CreateUserProps = {
+export type CreateUserOptions = {
     name: string;
     email: string;
     rawPassword: string;
     encryptor: IEncryptor;
-}
+};
 
-export type RestoreUserProps = Omit<CreateUserProps, 'rawPassword'> & {
+export type RestoreUserOptions = Omit<CreateUserOptions, 'rawPassword'> & {
     id: string;
     password: string;
-}
+};
 
 export default class User {
     private id!: string;
     public name!: string;
     public email!: string;
     private password!: string;
-    private encryptor!: IEncryptor;
 
     private constructor() {}
 
-    public static async create(props: CreateUserProps): Promise<User> {
-        const { name, email, rawPassword, encryptor } = props;
+    public static async create(options: CreateUserOptions): Promise<User> {
+        const { name, email, rawPassword, encryptor } = options;
 
         User.validateEmail(email);
 
@@ -37,16 +35,15 @@ export default class User {
             id,
             name,
             email,
-            encryptor
         });
 
-        await user.setPassword(rawPassword);
+        await user.setPassword(rawPassword, encryptor);
 
         return user;
     }
 
-    public static restore(props: RestoreUserProps) {
-        const { id, name, email, password } = props;
+    public static restore(options: RestoreUserOptions) {
+        const { id, name, email, password } = options;
 
         const user = new User();
 
@@ -75,11 +72,11 @@ export default class User {
         }
     }
 
-    private async setPassword(rawPassword: string): Promise<void> {
+    private async setPassword(rawPassword: string, encryptor: IEncryptor): Promise<void> {
         if (rawPassword.length < 8) {
             throw new ValidationException('Password must be at least 8 characters long', false);
         }
 
-        this.password = await this.encryptor.hash(rawPassword);
+        this.password = await encryptor.hash(rawPassword);
     }
 }

@@ -1,26 +1,26 @@
-import ValidationException from "../exceptions/validation.exception";
+import ValidationException from '../exceptions/validation.exception';
 
-export type CreateBoardProps = {
+export type CreateBoardOptions = {
     title: string;
-}
+};
 
-export type RestoreBoardProps = CreateBoardProps & {
+export type RestoreBoardOptions = CreateBoardOptions & {
     id: number;
     updatedAt: Date;
-}
+};
 
 export default class Board {
     id!: number;
     title!: string;
     updatedAt!: Date;
 
-    constructor () {}
+    constructor() {}
 
-    public static create (props: CreateBoardProps): Board  {
-        const { title } = props;
+    public static create(options: CreateBoardOptions): Board {
+        const { title } = options;
 
-        if(!title) {
-            throw new ValidationException("Title is required", true, title);
+        if (!title) {
+            throw new ValidationException('Title is required', true, title);
         }
 
         const board = new Board();
@@ -28,33 +28,33 @@ export default class Board {
         Object.assign(board, {
             id: null, // autoincrement ID
             title,
-            updatedAt: new Date()
+            updatedAt: new Date(),
         });
 
         return board;
     }
 
-    public static restore (props: RestoreBoardProps): Board {
-        const { id, title, updatedAt } = props;
+    public static restore(options: RestoreBoardOptions): Board {
+        const { id, title, updatedAt } = options;
 
         const board = new Board();
 
         Object.assign(board, {
             id,
             title,
-            updatedAt
+            updatedAt,
         });
 
         return board;
     }
 
-    private setNewUpdate () : void {
+    private setNewUpdate(): void {
         this.updatedAt = new Date();
     }
 
-    public setTitle (title: string): void {
-        if(!title) {
-            throw new ValidationException("Title is required", true, title);
+    public setTitle(title: string): void {
+        if (!title) {
+            throw new ValidationException('Title is required', true, title);
         }
         this.title = title;
         this.setNewUpdate();

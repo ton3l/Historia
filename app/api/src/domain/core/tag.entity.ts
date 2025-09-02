@@ -1,32 +1,32 @@
-import ValidationException from "../exceptions/validation.exception";
+import ValidationException from '../exceptions/validation.exception';
 
-export type CreateTagProps = {
-    name: string,
-    color: string
-}
+export type CreateTagOptions = {
+    name: string;
+    color: string;
+};
 
-export type RestoreTagProps = {
-    id: number
-    name: string
-    color: string
-}
+export type RestoreTagOptions = {
+    id: number;
+    name: string;
+    color: string;
+};
 
 export default class Tag {
     private id!: number;
     private name!: string;
     private color!: string;
 
-    constructor () {}
+    constructor() {}
 
-    public static create ( props: CreateTagProps ): Tag {
-        const { name, color } = props
+    public static create(options: CreateTagOptions): Tag {
+        const { name, color } = options;
 
-        if(!name) {
-            throw new ValidationException("Name is required", true, name);
+        if (!name) {
+            throw new ValidationException('Name is required', true, name);
         }
 
-        if(!color) {
-            throw new ValidationException("Color is required", true, color);
+        if (!color) {
+            throw new ValidationException('Color is required', true, color);
         }
 
         Tag.validateColor(color);
@@ -36,45 +36,45 @@ export default class Tag {
         Object.assign(tag, {
             id: null, // autoincrement ID
             name,
-            color
+            color,
         });
 
         return tag;
     }
 
-    public static restore ( props: RestoreTagProps ): Tag {
-        const { id, name, color } = props
+    public static restore(options: RestoreTagOptions): Tag {
+        const { id, name, color } = options;
 
         const tag = new Tag();
 
         Object.assign(tag, {
             id,
             name,
-            color
+            color,
         });
 
         return tag;
     }
 
-    private static validateColor (color: string): void {
+    private static validateColor(color: string): void {
         const hexColorRegex = /^#?([A-Fa-f0-9]{6})$/;
 
-        if (!hexColorRegex.test(color)){
-            throw new ValidationException("Invalid HEX color format", true, color);
+        if (!hexColorRegex.test(color)) {
+            throw new ValidationException('Invalid HEX color format', true, color);
         }
     }
 
-    public setName (name: string): void {
-        if(!name) {
-            throw new ValidationException("Name is required", true, name);
+    public setName(name: string): void {
+        if (!name) {
+            throw new ValidationException('Name is required', true, name);
         }
 
         this.name = name;
     }
 
-    public setColor (color: string): void {
-        if(!color) {
-            throw new ValidationException("Color is required", true, color);
+    public setColor(color: string): void {
+        if (!color) {
+            throw new ValidationException('Color is required', true, color);
         }
 
         Tag.validateColor(color);
