@@ -1,6 +1,6 @@
 import ValidationException from '../exceptions/validation.exception';
-import { v4 as uuidv4 } from 'uuid';
 import type IEncryptor from '../interfaces/encryptor.interface';
+import { v4 as uuidv4 } from 'uuid'; // Trocar para uuidv7
 
 export type CreateUserOptions = {
     name: string;
