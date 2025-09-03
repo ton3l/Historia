@@ -12,19 +12,19 @@ export type RestoreTagOptions = {
 };
 
 type ConstructorOptions = {
-    id: number | null;
+    id?: number;
     name: string;
     color: string;
 };
 
 export default class Tag {
-    private id: number | null;
+    private id?: number; // autoincrement ID
     private name: string;
     private color: string;
 
     constructor(options: ConstructorOptions) {
         const { id, name, color } = options;
-        this.id = id; // autoincrement ID
+        this.id = id;
         this.name = name;
         this.color = color;
     }
@@ -32,20 +32,12 @@ export default class Tag {
     public static create(options: CreateTagOptions): Tag {
         const { name, color } = options;
 
-        if (!name) {
-            throw new ValidationException('Name is required', true, name);
-        }
-
-        if (!color) {
-            throw new ValidationException('Color is required', true, color);
-        }
-
+        Tag.validateName(name);
         Tag.validateColor(color);
 
         const tag = new Tag({
-            id: null,
             name,
-            color,
+            color
         });
 
         return tag;
@@ -57,20 +49,12 @@ export default class Tag {
         const tag = new Tag({
             id,
             name,
-            color,
+            color
         });
-
+        
         return tag;
     }
-
-    private static validateColor(color: string): void {
-        const hexColorRegex = /^#?([A-Fa-f0-9]{6})$/;
-
-        if (!hexColorRegex.test(color)) {
-            throw new ValidationException('Invalid HEX color format', true, color);
-        }
-    }
-
+    
     public setName(name: string): void {
         if (!name) {
             throw new ValidationException('Name is required', true, name);
@@ -87,5 +71,23 @@ export default class Tag {
         Tag.validateColor(color);
 
         this.color = color;
+    }
+
+    private static validateName(name: string): void {
+        if (!name) {
+            throw new ValidationException('Name is required', true, name);
+        }
+    }
+
+    private static validateColor(color: string): void {
+        if (!color) {
+            throw new ValidationException('Color is required', true, color);
+        }
+
+        const hexColorRegex = /^#?([A-Fa-f0-9]{6})$/;
+
+        if (!hexColorRegex.test(color)) {
+            throw new ValidationException('Invalid HEX color format', true, color);
+        }
     }
 }

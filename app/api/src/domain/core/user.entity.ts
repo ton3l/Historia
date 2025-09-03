@@ -18,14 +18,14 @@ type ConstructorOptions = {
     id: string;
     name: string;
     email: string;
-    password: string | null;
+    password?: string;
 };
 
 export default class User {
     private id: string;
     public name: string;
     public email: string;
-    private password: string | null;
+    private password?: string;
 
     private constructor(options: ConstructorOptions) {
         const { id, name, email, password } = options;
@@ -38,6 +38,7 @@ export default class User {
     public static async create(options: CreateUserOptions): Promise<User> {
         const { name, email, rawPassword, encryptor } = options;
 
+        User.validateName(name);
         User.validateEmail(email);
 
         const id = uuidv4();
@@ -45,8 +46,7 @@ export default class User {
         const user = new User({
             id,
             name,
-            email,
-            password: null
+            email
         });
 
         await user.setPassword(rawPassword, encryptor);
@@ -67,11 +67,28 @@ export default class User {
         return user;
     }
 
-    public static verifyLogin(email: string, password: string): Promise<boolean> {
+    private async setPassword(rawPassword: string, encryptor: IEncryptor): Promise<void> {
+        if (rawPassword.length < 8) {
+            throw new ValidationException('Password must be at least 8 characters long', false);
+        }
+
+        this.password = await encryptor.hash(rawPassword);
+    }
+
+    private static verifyLogin(email: string, password: string): Promise<boolean> {
         // Implement login verification logic
         return new Promise((resolve) => {
             resolve(true);
         });
+    }
+
+    private static validateName(name: string): void {
+        if (!name) {
+            throw new ValidationException('Name is required', true, name);
+        }
+        if (name.length < 4) {
+            throw new ValidationException('Name must be at least 4 characters long', true, name);
+        }
     }
 
     private static validateEmail(email: string): void {
@@ -80,13 +97,5 @@ export default class User {
         if (!emailRegex.test(email)) {
             throw new ValidationException('Invalid email format', true, email);
         }
-    }
-
-    private async setPassword(rawPassword: string, encryptor: IEncryptor): Promise<void> {
-        if (rawPassword.length < 8) {
-            throw new ValidationException('Password must be at least 8 characters long', false);
-        }
-
-        this.password = await encryptor.hash(rawPassword);
     }
 }

@@ -10,15 +10,15 @@ export type RestoreBoardOptions = CreateBoardOptions & {
 };
 
 type ConstructorOptions = {
-    id: number | null;
+    id?: number;
     title: string;
     updatedAt: Date;
 };
 
 export default class Board {
-    id: number | null;
-    title: string;
-    updatedAt: Date;
+    private id?: number; // auto-increment ID
+    private title: string;
+    private updatedAt: Date;
 
     constructor(options: ConstructorOptions) {
         const { id, title, updatedAt } = options;
@@ -30,12 +30,9 @@ export default class Board {
     public static create(options: CreateBoardOptions): Board {
         const { title } = options;
 
-        if (!title) {
-            throw new ValidationException('Title is required', true, title);
-        }
+        Board.validateTitle(title);
 
         const board = new Board({
-            id: null, // autoincrement ID
             title,
             updatedAt: new Date()
         });
@@ -55,15 +52,22 @@ export default class Board {
         return board;
     }
 
-    private setNewUpdate(): void {
+    private setUpdate(): void {
         this.updatedAt = new Date();
     }
 
     public setTitle(title: string): void {
+        Board.validateTitle(title);
+        this.title = title;
+        this.setUpdate();
+    }
+
+    private static validateTitle(title: string): void {
         if (!title) {
             throw new ValidationException('Title is required', true, title);
         }
-        this.title = title;
-        this.setNewUpdate();
+        if (title.length < 2) {
+            throw new ValidationException('Title must be at least 2 characters long', true, title);
+        }
     }
 }
