@@ -14,13 +14,26 @@ export type RestoreUserOptions = Omit<CreateUserOptions, 'rawPassword'> & {
     password: string;
 };
 
-export default class User {
-    private id!: string;
-    public name!: string;
-    public email!: string;
-    private password!: string;
+type ConstructorOptions = {
+    id: string;
+    name: string;
+    email: string;
+    password: string | null;
+};
 
-    private constructor() {}
+export default class User {
+    private id: string;
+    public name: string;
+    public email: string;
+    private password: string | null;
+
+    private constructor(options: ConstructorOptions) {
+        const { id, name, email, password } = options;
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 
     public static async create(options: CreateUserOptions): Promise<User> {
         const { name, email, rawPassword, encryptor } = options;
@@ -29,12 +42,11 @@ export default class User {
 
         const id = uuidv4();
 
-        const user = new User();
-
-        Object.assign(user, {
+        const user = new User({
             id,
             name,
             email,
+            password: null
         });
 
         await user.setPassword(rawPassword, encryptor);
@@ -45,13 +57,11 @@ export default class User {
     public static restore(options: RestoreUserOptions) {
         const { id, name, email, password } = options;
 
-        const user = new User();
-
-        Object.assign(user, {
+        const user = new User({
             id,
             name,
             email,
-            password,
+            password
         });
 
         return user;

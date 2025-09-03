@@ -11,12 +11,23 @@ export type RestoreTagOptions = {
     color: string;
 };
 
-export default class Tag {
-    private id!: number;
-    private name!: string;
-    private color!: string;
+type ConstructorOptions = {
+    id: number | null;
+    name: string;
+    color: string;
+};
 
-    constructor() {}
+export default class Tag {
+    private id: number | null;
+    private name: string;
+    private color: string;
+
+    constructor(options: ConstructorOptions) {
+        const { id, name, color } = options;
+        this.id = id; // autoincrement ID
+        this.name = name;
+        this.color = color;
+    }
 
     public static create(options: CreateTagOptions): Tag {
         const { name, color } = options;
@@ -31,10 +42,8 @@ export default class Tag {
 
         Tag.validateColor(color);
 
-        const tag = new Tag();
-
-        Object.assign(tag, {
-            id: null, // autoincrement ID
+        const tag = new Tag({
+            id: null,
             name,
             color,
         });
@@ -45,9 +54,7 @@ export default class Tag {
     public static restore(options: RestoreTagOptions): Tag {
         const { id, name, color } = options;
 
-        const tag = new Tag();
-
-        Object.assign(tag, {
+        const tag = new Tag({
             id,
             name,
             color,
