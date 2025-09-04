@@ -37,7 +37,7 @@ export default class Tag {
 
         const tag = new Tag({
             name,
-            color
+            color,
         });
 
         return tag;
@@ -49,12 +49,12 @@ export default class Tag {
         const tag = new Tag({
             id,
             name,
-            color
+            color,
         });
-        
+
         return tag;
     }
-    
+
     public setName(name: string): void {
         if (!name) {
             throw new ValidationException('Name is required', true, name);

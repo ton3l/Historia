@@ -1,5 +1,5 @@
-import ValidationException from "../exceptions/validation.exception";
-import Task from "./task.entity";
+import ValidationException from '../exceptions/validation.exception';
+import Task from './task.entity';
 
 export type CreateListOptions = {
     title: string;
@@ -32,7 +32,7 @@ export default class List {
         this.position = position;
     }
 
-    public static create (options: CreateListOptions): List {
+    public static create(options: CreateListOptions): List {
         const { title, position } = options;
 
         List.validateTitle(title);
@@ -40,20 +40,20 @@ export default class List {
         const list = new List({
             title,
             tasks: [],
-            position
+            position,
         });
 
         return list;
     }
 
-    public static restore (options: RestoreListOptions): List {
+    public static restore(options: RestoreListOptions): List {
         const { id, title, position, tasks } = options;
 
         const list = new List({
             id,
             title,
             tasks,
-            position
+            position,
         });
 
         return list;

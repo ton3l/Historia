@@ -2,7 +2,7 @@ import { app, httpsServer, port } from './infrastructure/server';
 import type { Application } from 'express';
 import https from 'https';
 
-type initOptions = {
+type ConstructorOptions = {
     app: Application;
     port: number;
     httpsServer: https.Server;
@@ -13,13 +13,13 @@ class API {
     private port: number;
     private httpsServer: https.Server;
 
-    private constructor(options: initOptions) {
+    private constructor(options: ConstructorOptions) {
         this.app = options.app;
         this.port = options.port;
         this.httpsServer = options.httpsServer;
     }
 
-    public static init(options: initOptions) {
+    public static init(options: ConstructorOptions) {
         const api = new API(options);
         api.listen();
     }

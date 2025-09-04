@@ -34,7 +34,7 @@ export default class Board {
 
         const board = new Board({
             title,
-            updatedAt: new Date()
+            updatedAt: new Date(),
         });
 
         return board;
@@ -46,7 +46,7 @@ export default class Board {
         const board = new Board({
             id,
             title,
-            updatedAt
+            updatedAt,
         });
 
         return board;

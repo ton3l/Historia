@@ -46,7 +46,7 @@ export default class User {
         const user = new User({
             id,
             name,
-            email
+            email,
         });
 
         await user.setPassword(rawPassword, encryptor);
@@ -61,7 +61,7 @@ export default class User {
             id,
             name,
             email,
-            password
+            password,
         });
 
         return user;
