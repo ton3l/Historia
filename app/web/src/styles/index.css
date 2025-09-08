@@ -16,15 +16,83 @@
 }
 
 @custom-variant dark ( &:where(.dark, .dark *) );
+@custom-variant pink ( &:where(.pink, .pink *) );
+@custom-variant gray ( &:where(.gray, .gray *) );
 
 @theme {
-    --color-primary-light: #ff0000;
-    --color-secondary-light: #00ff00;
-    --color-background-light: #0000ff;
-    --color-neutral-light: #808080;
+    --color-primary-light: #FCFCFD;
+    --color-emphasis-light: #FEFEFF;
+    --color-background-light: #F1F1F1;
+    --color-neutral-light: #353535;
 
-    --color-primary-dark: #aa0000;
-    --color-secondary-dark: #00aa00;
-    --color-background-dark: #0000aa;
-    --color-neutral-dark: #aaaaaa;
+    --color-primary-pink: #FFFBFF;
+    --color-emphasis-pink: #FFB8F4;
+    --color-background-pink: #FFE3FB;
+    --color-neutral-pink : #353535;
+
+    --color-primary-gray: #F5F5F5;
+    --color-emphasis-gray: #BABABA;
+    --color-background-gray: #DFE0E4;
+    --color-neutral-gray : #353535;
+
+    --color-primary-dark: #060606;
+    --color-emphasis-dark: #000000;
+    --color-background-dark: #1A1A1A;
+    --color-neutral-dark: #FFFFFF;
+}
+
+.bg-primary {
+    background-color: var(--color-primary-light);
+
+    @variant dark {
+        background-color: var(--color-primary-dark);
+    }
+    @variant pink {
+        background-color: var(--color-primary-pink);
+    }
+    @variant gray {
+        background-color: var(--color-primary-gray);
+    }
+}
+
+.bg-emphasis {
+    background-color: var(--color-emphasis-light);
+
+    @variant dark {
+        background-color: var(--color-emphasis-dark);
+    }
+    @variant pink {
+        background-color: var(--color-emphasis-pink);
+    }
+    @variant gray {
+        background-color: var(--color-emphasis-gray);
+    }
+}
+
+.bg-neutral {
+    background-color: var(--color-neutral-light);
+
+    @variant dark {
+        background-color: var(--color-neutral-dark);
+    }
+    @variant pink {
+        background-color: var(--color-neutral-pink);
+    }
+    @variant gray {
+        background-color: var(--color-neutral-gray);
+    }
+}
+
+.bg-default {
+    background-color: var(--color-background-light);
+
+    @variant dark {
+        background-color: var(--color-background-dark);
+    }
+    @variant pink {
+        background-color: var(--color-background-pink);
+    }
+    @variant gray {
+        background-color: var(--color-background-gray);
+    }
 }

@@ -16,22 +16,6 @@
   border-radius: 8px;
 }
 
-#primary {
-  background-color: #ff0000;
-}
-
-#secondary {
-  background-color: #00ff00;
-}
-
-#background {
-  background-color: #0000ff;
-}
-
-#neutral {
-  background-color: #808080;
-}
-
 .container {
   display: flex;
   justify-content: center;
