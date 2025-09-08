@@ -1,20 +1,30 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 500;
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 500;
 
-  color-scheme: light pink gray dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+    color-scheme: light pink gray dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-@theme {
+@custom-variant dark ( &:where(.dark, .dark *) );
 
+@theme {
+    --color-primary-light: #ff0000;
+    --color-secondary-light: #00ff00;
+    --color-background-light: #0000ff;
+    --color-neutral-light: #808080;
+
+    --color-primary-dark: #aa0000;
+    --color-secondary-dark: #00aa00;
+    --color-background-dark: #0000aa;
+    --color-neutral-dark: #aaaaaa;
 }
