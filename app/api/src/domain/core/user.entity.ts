@@ -2,19 +2,19 @@ import ValidationException from '../exceptions/validation.exception';
 import type IEncryptor from '../interfaces/encryptor.interface';
 import { v4 as uuidv4 } from 'uuid'; // Trocar para uuidv7
 
-export type CreateUserOptions = {
+export interface CreateUserOptions {
     name: string;
     email: string;
     rawPassword: string;
     encryptor: IEncryptor;
 };
 
-export type RestoreUserOptions = Omit<CreateUserOptions, 'rawPassword'> & {
+export interface RestoreUserOptions extends Omit<CreateUserOptions, 'rawPassword'> {
     id: string;
     password: string;
 };
 
-type ConstructorOptions = {
+interface ConstructorOptions {
     id: string;
     name: string;
     email: string;

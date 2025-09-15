@@ -1,15 +1,15 @@
 import ValidationException from '../exceptions/validation.exception';
 
-export type CreateBoardOptions = {
+export interface CreateBoardOptions {
     title: string;
 };
 
-export type RestoreBoardOptions = CreateBoardOptions & {
+export interface RestoreBoardOptions extends CreateBoardOptions {
     id: number;
     updatedAt: Date;
 };
 
-type ConstructorOptions = {
+interface ConstructorOptions {
     id?: number;
     title: string;
     updatedAt: Date;

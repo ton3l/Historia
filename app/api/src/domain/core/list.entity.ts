@@ -1,17 +1,17 @@
 import ValidationException from '../exceptions/validation.exception';
 import Task from './task.entity';
 
-export type CreateListOptions = {
+export interface CreateListOptions {
     title: string;
     position: number;
 };
 
-export type RestoreListOptions = CreateListOptions & {
+export interface RestoreListOptions extends CreateListOptions {
     id: number;
     tasks: Array<Task>;
 };
 
-type ConstructorOptions = {
+interface ConstructorOptions {
     id?: number;
     title: string;
     position: number;

@@ -1,17 +1,17 @@
 import ValidationException from '../exceptions/validation.exception';
 
-export type CreateTagOptions = {
+export interface CreateTagOptions {
     name: string;
     color: string;
 };
 
-export type RestoreTagOptions = {
+export interface RestoreTagOptions {
     id: number;
     name: string;
     color: string;
 };
 
-type ConstructorOptions = {
+interface ConstructorOptions {
     id?: number;
     name: string;
     color: string;
