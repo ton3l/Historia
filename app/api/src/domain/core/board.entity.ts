@@ -1,21 +1,21 @@
-import ValidationException from '../exceptions/validation.exception';
+import { ValidationException } from '../exceptions/validation.exception';
 
 export interface CreateBoardOptions {
     title: string;
-};
+}
 
 export interface RestoreBoardOptions extends CreateBoardOptions {
     id: number;
     updatedAt: Date;
-};
+}
 
 interface ConstructorOptions {
     id?: number;
     title: string;
     updatedAt: Date;
-};
+}
 
-export default class Board {
+export class Board {
     private id?: number; // auto-increment ID
     private title: string;
     private updatedAt: Date;
@@ -64,10 +64,10 @@ export default class Board {
 
     private static validateTitle(title: string): void {
         if (!title) {
-            throw new ValidationException('Title is required', true, title);
+            throw new ValidationException({message: 'Title is required', showValue: true, value: title});
         }
         if (title.length < 2) {
-            throw new ValidationException('Title must be at least 2 characters long', true, title);
+            throw new ValidationException({message: 'Title must be at least 2 characters long', showValue: true, value: title});
         }
     }
 }

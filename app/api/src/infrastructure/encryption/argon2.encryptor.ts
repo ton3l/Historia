@@ -1,7 +1,7 @@
-import type Encryptor from '../../domain/interfaces/encryptor.interface';
+import type { Encryptor } from '../../domain/interfaces/encryptor.interface';
 import * as argon from 'argon2';
 
-export default class Argon2Encryptor implements Encryptor {
+export class Argon2Encryptor implements Encryptor {
     async hash(plainText: string): Promise<string> {
         return await argon.hash(plainText);
     }

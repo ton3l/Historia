@@ -1,23 +1,23 @@
-import ValidationException from '../exceptions/validation.exception';
+import { ValidationException } from '../exceptions/validation.exception';
 
 export interface CreateTagOptions {
     name: string;
     color: string;
-};
+}
 
 export interface RestoreTagOptions {
     id: number;
     name: string;
     color: string;
-};
+}
 
 interface ConstructorOptions {
     id?: number;
     name: string;
     color: string;
-};
+}
 
-export default class Tag {
+export class Tag {
     private id?: number; // autoincrement ID
     private name: string;
     private color: string;
@@ -57,7 +57,7 @@ export default class Tag {
 
     public setName(name: string): void {
         if (!name) {
-            throw new ValidationException('Name is required', true, name);
+            throw new ValidationException({message: 'Name is required', showValue: true, value: name});
         }
 
         this.name = name;
@@ -65,7 +65,7 @@ export default class Tag {
 
     public setColor(color: string): void {
         if (!color) {
-            throw new ValidationException('Color is required', true, color);
+            throw new ValidationException({message: 'Color is required', showValue: true, value: color});
         }
 
         Tag.validateColor(color);
@@ -75,19 +75,19 @@ export default class Tag {
 
     private static validateName(name: string): void {
         if (!name) {
-            throw new ValidationException('Name is required', true, name);
+            throw new ValidationException({message: 'Name is required', showValue: true, value: name});
         }
     }
 
     private static validateColor(color: string): void {
         if (!color) {
-            throw new ValidationException('Color is required', true, color);
+            throw new ValidationException({message: 'Color is required', showValue: true, value: color});
         }
 
         const hexColorRegex = /^#?([A-Fa-f0-9]{6})$/;
 
         if (!hexColorRegex.test(color)) {
-            throw new ValidationException('Invalid HEX color format', true, color);
+            throw new ValidationException({message: 'Invalid HEX color format', showValue: true, value: color});
         }
     }
 }

@@ -1,27 +1,27 @@
-import ValidationException from '../exceptions/validation.exception';
-import type IEncryptor from '../interfaces/encryptor.interface';
-import { v4 as uuidv4 } from 'uuid'; // Trocar para uuidv7
+import { ValidationException } from '../exceptions/validation.exception';
+import type { Encryptor } from '../interfaces/encryptor.interface';
+import { v7 as uuidv7 } from 'uuid'; // Trocar para uuidv7
 
 export interface CreateUserOptions {
     name: string;
     email: string;
     rawPassword: string;
-    encryptor: IEncryptor;
-};
+    encryptor: Encryptor;
+}
 
 export interface RestoreUserOptions extends Omit<CreateUserOptions, 'rawPassword'> {
     id: string;
     password: string;
-};
+}
 
 interface ConstructorOptions {
     id: string;
     name: string;
     email: string;
     password?: string;
-};
+}
 
-export default class User {
+export class User {
     private id: string;
     public name: string;
     public email: string;
@@ -41,7 +41,7 @@ export default class User {
         User.validateName(name);
         User.validateEmail(email);
 
-        const id = uuidv4();
+        const id = uuidv7();
 
         const user = new User({
             id,
@@ -67,27 +67,20 @@ export default class User {
         return user;
     }
 
-    private async setPassword(rawPassword: string, encryptor: IEncryptor): Promise<void> {
+    private async setPassword(rawPassword: string, encryptor: Encryptor): Promise<void> {
         if (rawPassword.length < 8) {
-            throw new ValidationException('Password must be at least 8 characters long', false);
+            throw new ValidationException({message: 'Password must be at least 8 characters long', showValue: false});
         }
 
         this.password = await encryptor.hash(rawPassword);
     }
 
-    private static verifyLogin(email: string, password: string): Promise<boolean> {
-        // Implement login verification logic
-        return new Promise((resolve) => {
-            resolve(true);
-        });
-    }
-
     private static validateName(name: string): void {
         if (!name) {
-            throw new ValidationException('Name is required', true, name);
+            throw new ValidationException({ message: 'Name is required', showValue: true, value: name});
         }
         if (name.length < 4) {
-            throw new ValidationException('Name must be at least 4 characters long', true, name);
+            throw new ValidationException({message: 'Name must be at least 4 characters long', showValue: true, value: name});
         }
     }
 
@@ -95,7 +88,7 @@ export default class User {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!emailRegex.test(email)) {
-            throw new ValidationException('Invalid email format', true, email);
+            throw new ValidationException({message: 'Invalid email format', showValue: true, value: email});
         }
     }
 }
