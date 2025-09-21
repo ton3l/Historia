@@ -67,6 +67,10 @@ export class Board {
         this.setUpdate();
     }
 
+    public addList(list: List): void {
+        this.lists.push(list);
+    }
+
     private static validateTitle(title: string): void {
         if (!title) {
             throw new ValidationException({ message: 'Title is required', showValue: true, value: title });
