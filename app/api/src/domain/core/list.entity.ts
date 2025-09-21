@@ -1,21 +1,17 @@
 import { ValidationException } from '../exceptions/validation.exception';
 import { Task } from './task.entity';
 
-export interface CreateListOptions {
-    title: string;
-    position: number;
-}
-
-export interface RestoreListOptions extends CreateListOptions {
-    id: number;
-    tasks: Array<Task>;
-}
-
 interface ConstructorOptions {
     id?: number;
     title: string;
     position: number;
-    tasks: Array<Task>;
+    tasks?: Array<Task>;
+}
+
+export interface CreateListOptions extends Omit<ConstructorOptions, 'id' | 'tasks'> {}
+
+export interface RestoreListOptions extends ConstructorOptions {
+    id: number;
 }
 
 export class List {
@@ -28,7 +24,7 @@ export class List {
         const { id, title, position, tasks } = options;
         this.id = id;
         this.title = title;
-        this.tasks = tasks;
+        this.tasks = tasks ? tasks : [];
         this.position = position;
     }
 
@@ -39,7 +35,6 @@ export class List {
 
         const list = new List({
             title,
-            tasks: [],
             position,
         });
 
@@ -59,9 +54,9 @@ export class List {
         return list;
     }
 
-    public setTitle(title: string): void {
-        List.validateTitle(title);
-        this.title = title;
+    public setTitle(newTitle: string): void {
+        List.validateTitle(newTitle);
+        this.title = newTitle;
     }
 
     public setPosition(newPosition: number): void {
@@ -71,19 +66,19 @@ export class List {
 
     private static validateTitle(title: string): void {
         if (!title) {
-            throw new ValidationException({message: 'Title is required', showValue: true, value: title});
+            throw new ValidationException({ message: 'Title is required', showValue: true, value: title });
         }
         if (title.length < 4) {
-            throw new ValidationException({message: 'Title must be at least 4 characters long', showValue: true, value: title});
+            throw new ValidationException({ message: 'Title must be at least 4 characters long', showValue: true, value: title });
         }
     }
 
     private static validatePosition(position: number): void {
         if (!position) {
-            throw new ValidationException({message: 'Position is required', showValue: true, value: position});
+            throw new ValidationException({ message: 'Position is required', showValue: true, value: position });
         }
         if (position < 0) {
-            throw new ValidationException({message: 'Position must be a positive number', showValue: true, value: position});
+            throw new ValidationException({ message: 'Position must be a positive number', showValue: true, value: position });
         }
     }
 }

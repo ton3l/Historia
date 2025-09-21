@@ -1,24 +1,22 @@
 import { ValidationException } from '../exceptions/validation.exception';
 
-export interface CreateBoardOptions {
-    title: string;
-}
-
-export interface RestoreBoardOptions extends CreateBoardOptions {
-    id: number;
-    updatedAt: Date;
-}
-
 interface ConstructorOptions {
     id?: number;
     title: string;
+    updatedAt?: Date;
+}
+
+export interface CreateBoardOptions extends Omit<ConstructorOptions, 'id' | 'updatedAt'> {}
+
+export interface RestoreBoardOptions extends ConstructorOptions {
+    id: number;
     updatedAt: Date;
 }
 
 export class Board {
     private id?: number; // auto-increment ID
     private title: string;
-    private updatedAt: Date;
+    private updatedAt?: Date;
 
     constructor(options: ConstructorOptions) {
         const { id, title, updatedAt } = options;
@@ -34,8 +32,9 @@ export class Board {
 
         const board = new Board({
             title,
-            updatedAt: new Date(),
         });
+
+        board.setUpdate();
 
         return board;
     }
@@ -56,18 +55,19 @@ export class Board {
         this.updatedAt = new Date();
     }
 
-    public setTitle(title: string): void {
-        Board.validateTitle(title);
-        this.title = title;
+    public setTitle(newTitle: string): void {
+        Board.validateTitle(newTitle);
+        this.title = newTitle;
+        
         this.setUpdate();
     }
 
     private static validateTitle(title: string): void {
         if (!title) {
-            throw new ValidationException({message: 'Title is required', showValue: true, value: title});
+            throw new ValidationException({ message: 'Title is required', showValue: true, value: title });
         }
         if (title.length < 2) {
-            throw new ValidationException({message: 'Title must be at least 2 characters long', showValue: true, value: title});
+            throw new ValidationException({ message: 'Title must be at least 2 characters long', showValue: true, value: title });
         }
     }
 }
