@@ -1,4 +1,4 @@
-import { ValidationException } from '../exceptions/validation.exception';
+import { ValidationException } from '@domain/exceptions/validation.exception';
 import { Task } from './task.entity';
 
 interface ConstructorOptions {
@@ -62,6 +62,10 @@ export class List {
     public setPosition(newPosition: number): void {
         List.validatePosition(newPosition);
         this.position = newPosition;
+    }
+
+    public addTask(task: Task): void {
+        this.tasks.push(task);
     }
 
     private static validateTitle(title: string): void {

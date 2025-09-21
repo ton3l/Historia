@@ -1,8 +1,10 @@
-import { ValidationException } from '../exceptions/validation.exception';
+import { ValidationException } from '@domain/exceptions/validation.exception';
+import type { List } from './list.entity';
 
 interface ConstructorOptions {
     id?: number;
     title: string;
+    lists?: Array<List>;
     updatedAt?: Date;
 }
 
@@ -16,12 +18,14 @@ export interface RestoreBoardOptions extends ConstructorOptions {
 export class Board {
     private id?: number; // auto-increment ID
     private title: string;
+    private lists: Array<List>;
     private updatedAt?: Date;
 
     constructor(options: ConstructorOptions) {
-        const { id, title, updatedAt } = options;
+        const { id, title, lists, updatedAt } = options;
         this.id = id;
         this.title = title;
+        this.lists = lists ? lists : [];
         this.updatedAt = updatedAt;
     }
 
@@ -40,11 +44,12 @@ export class Board {
     }
 
     public static restore(options: RestoreBoardOptions): Board {
-        const { id, title, updatedAt } = options;
+        const { id, title, lists, updatedAt } = options;
 
         const board = new Board({
             id,
             title,
+            lists,
             updatedAt,
         });
 
@@ -58,7 +63,7 @@ export class Board {
     public setTitle(newTitle: string): void {
         Board.validateTitle(newTitle);
         this.title = newTitle;
-        
+
         this.setUpdate();
     }
 

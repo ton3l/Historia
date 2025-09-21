@@ -1,4 +1,4 @@
-import { ValidationException } from '../exceptions/validation.exception';
+import { ValidationException } from '@domain/exceptions/validation.exception';
 import type { Tag } from './tag.entity';
 
 interface ConstructorOptions {

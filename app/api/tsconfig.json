@@ -5,7 +5,7 @@
     "rootDir": "./",
     "composite": true,
     "baseUrl": "./",
-    "paths": { "@api/*": ["src/*"] }
+    "paths": { "@api/*": ["src/*"], "@domain/*": ["src/domain/*"] }
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules", "dist"],

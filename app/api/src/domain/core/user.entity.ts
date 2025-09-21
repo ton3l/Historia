@@ -1,5 +1,5 @@
-import { ValidationException } from '../exceptions/validation.exception';
-import type { Encryptor } from '../interfaces/encryptor.interface';
+import { ValidationException } from '@domain/exceptions/validation.exception';
+import type { Encryptor } from '@domain/interfaces/encryptor.interface';
 import { v7 as uuidv7 } from 'uuid';
 
 interface ConstructorOptions {
