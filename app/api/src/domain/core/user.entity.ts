@@ -14,7 +14,7 @@ export interface CreateUserOptions extends Omit<ConstructorOptions, 'id' | 'pass
     encryptor: Encryptor;
 }
 
-export interface RestoreUserOptions extends Omit<ConstructorOptions, 'rawPassword'> {
+export interface RestoreUserOptions extends ConstructorOptions {
     password: string;
 }
 
