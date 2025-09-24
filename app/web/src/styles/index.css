@@ -9,6 +9,14 @@
     --neutral: #353535;
     --variant: #353535;
 
+    &[data-theme="light"] {
+        --primary: #fcfcfd;
+        --accent: #676769;
+        --background: #f1f1f1;
+        --neutral: #353535;
+        --variant: #353535;
+    }
+
     &[data-theme="pink"] {
         --primary: #fffaff;
         --accent: #ffb8f4;
@@ -26,7 +34,7 @@
     }
 
     &[data-theme="dark"] {
-        --primary: #060606;
+        --primary: #161616;
         --accent: #000000;
         --background: #1a1a1a;
         --neutral: #ffffff;
