@@ -5,9 +5,9 @@ function App() {
     return (
         <>
             <main>
-                <Logo></Logo>
+                <Logo />
             </main>
-            <Nav></Nav>
+            <Nav />
         </>
     );
 }

@@ -1,5 +1,5 @@
 import { ValidationException } from '@domain/exceptions/validation.exception';
-import { Task } from './task.entity';
+import type { Task } from './task.entity';
 
 interface ConstructorOptions {
     id?: number;
