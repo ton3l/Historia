@@ -144,3 +144,6 @@ vite.config.ts.timestamp-*
 
 #Windows
 desktop.ini
+
+#AI's
+GEMINI*

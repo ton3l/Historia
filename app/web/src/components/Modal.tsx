@@ -15,7 +15,6 @@ function Modal({ handleOpen }: { handleOpen: [boolean, Dispatch<boolean>] }) {
                     <Board />
                     <Board />
                     <Board />
-                    <Board />
                 </section>
             </main>
         </MUIModal>
@@ -25,15 +24,6 @@ function Modal({ handleOpen }: { handleOpen: [boolean, Dispatch<boolean>] }) {
 export default Modal;
 
 function Header({ action: setOpen }: { action: Dispatch<boolean> }) {
-    let currentTheme = 0;
-    function tempHandleTheme() {
-        const themes = ['light', 'dark', 'pink', 'gray'];
-        if (currentTheme === themes.length - 1) currentTheme = 0;
-        else currentTheme += 1;
-        console.log(themes[currentTheme], currentTheme);
-        document.querySelector('html')?.setAttribute('data-theme', themes[currentTheme]);
-    }
-
     return (
         <header className="flex w-full items-center justify-between border-b-1 border-gray-300 px-4 py-2">
             <svg onClick={() => setOpen(false)} className="cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="-4 -4 30 30" fill="none" >
@@ -41,16 +31,7 @@ function Header({ action: setOpen }: { action: Dispatch<boolean> }) {
             </svg>
             <section className="flex items-center gap-2">
                 <h1 className="text-neutral text-2xl">Workspace</h1>
-                <button className="bg-accent mt-1 h-5 w-5 cursor-pointer rounded-full p-0.5" onClick={tempHandleTheme}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                        <g fill="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.4">
-                            <path stroke="#fff" d="M12 21a9 9 0 0 1 0-18c4.97 0 9 3.582 9 8c0 1.06-.474 2.078-1.318 2.828S17.693 15 16.5 15H14a2 2 0 0 0-1 3.75A1.3 1.3 0 0 1 12 21" />
-                            <path stroke="#ed8796" d="M7.5 10.5c0 1.333 2 1.333 2 0s-2-1.333-2 0" />
-                            <path stroke="#a6da95" d="M11.5 7.5c0 1.333 2 1.333 2 0s-2-1.333-2 0" />
-                            <path stroke="#8aadf4" d="M15.5 10.5c0 1.333 2 1.333 2 0s-2-1.333-2 0" />
-                        </g>
-                    </svg>
-                </button>
+                <ThemeSelector />
             </section>
             <button className="bg-accent cursor-pointer rounded-full px-2 py-2">
                 <svg className="me-[-0.5px]" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -61,9 +42,34 @@ function Header({ action: setOpen }: { action: Dispatch<boolean> }) {
     );
 }
 
+function ThemeSelector() {
+    let currentTheme = 0;
+    function tempHandleTheme() {
+        const themes = ['light', 'dark', 'pink', 'gray'];
+
+        if (currentTheme === themes.length - 1) currentTheme = 0;
+        else currentTheme += 1;
+
+        document.querySelector('html')?.setAttribute('data-theme', themes[currentTheme]);
+    }
+
+    return (
+        <button className="bg-accent mt-1 h-5 w-5 cursor-pointer rounded-full p-0.5" onClick={tempHandleTheme}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                <g fill="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.4">
+                    <path stroke="#fff" d="M12 21a9 9 0 0 1 0-18c4.97 0 9 3.582 9 8c0 1.06-.474 2.078-1.318 2.828S17.693 15 16.5 15H14a2 2 0 0 0-1 3.75A1.3 1.3 0 0 1 12 21" />
+                    <path stroke="#ed8796" d="M7.5 10.5c0 1.333 2 1.333 2 0s-2-1.333-2 0" />
+                    <path stroke="#a6da95" d="M11.5 7.5c0 1.333 2 1.333 2 0s-2-1.333-2 0" />
+                    <path stroke="#8aadf4" d="M15.5 10.5c0 1.333 2 1.333 2 0s-2-1.333-2 0" />
+                </g>
+            </svg>
+        </button>
+    );
+}
+
 function Board() {
     return (
-        <section className="flex items-center justify-between gap-4 border-b border-gray-300 px-4 py-2 last:border-0">
+        <section className="flex items-center justify-between gap-4 border-b border-gray-300 px-4 py-2 cursor-pointer last:border-0">
             <div className="flex items-center gap-2">
                 <div className="h-14 w-32 rounded-2xl bg-gray-300"></div>
                 <h2 className="text-neutral text-xl">Board Title</h2>
