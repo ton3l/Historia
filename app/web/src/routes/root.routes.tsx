@@ -1,22 +1,23 @@
-import { Outlet, createRouter, createRootRoute, } from '@tanstack/react-router'
+import { Outlet, createRouter, createRootRoute } from '@tanstack/react-router';
+import { indexRoute } from '@routes/index.route';
+import { boardRoute } from './board.route';
 import Nav from '@components/Nav';
-import { indexRoute } from './index.routes';
-/* Fazer em formato de classe */
+
 export const rootRoute = createRootRoute({
-  component: () => (
-    <>
-      <Outlet />
-      <Nav />
-    </>
-  ),
-})
+    component: () => (
+        <>
+            <Outlet />
+            <Nav />
+        </>
+    ),
+});
 
-const routeTree = rootRoute.addChildren([indexRoute])
+const routeTree = rootRoute.addChildren([ indexRoute, boardRoute ]);
 
-export const router = createRouter({ routeTree })
+export const router = createRouter({ routeTree });
 
 declare module '@tanstack/react-router' {
-  interface Register {
-    router: typeof router
-  }
+    interface Register {
+        router: typeof router;
+    }
 }
