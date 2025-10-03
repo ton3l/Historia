@@ -147,3 +147,6 @@ desktop.ini
 
 #AI's
 GEMINI*
+
+#prisma-client
+**/prisma/generated/
