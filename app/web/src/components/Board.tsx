@@ -4,6 +4,7 @@ function Board() {
             <List />
             <List />
             <List />
+            <List />
         </main>
     );
 }
@@ -31,7 +32,7 @@ function List() {
 }
 
 function Task() {
-    const extended = false;
+    const extended = true;
     return (
         <main className="bg-primary text-neutral flex w-full min-w-48 max-h-56 flex-col items-center px-4 py-1.5 gap-1 justify-between rounded-lg">
             <header className="flex w-full items-center justify-between">
@@ -57,19 +58,40 @@ function Task() {
             <article className="h-32 line-clamp-5 text-justify">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Omnis expedita ratione, nemo atque cupiditate facilis commodi culpa vel corporis odit officia saepe laborum incidunt quos voluptatem animi consequatur libero aspernatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure fugiat, atque fuga soluta optio tempora neque vel! Sapiente alias, numquam culpa laborum reprehenderit hic eos natus, debitis nemo beatae atque.
             </article>
-            <section className="flex w-full items-center">
-                <div className="h-5 w-5 bg-gray-500 rounded-full">
-
-                </div>
-            </section>
+            <ul className="flex w-full items-center overflow-x-clip self-start gap-1 [mask-image:linear-gradient(to_left,transparent,black_50px)]">
+                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
+                </li>
+                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
+                </li>
+                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
+                </li>
+                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
+                </li>
+                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
+                </li>
+                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
+                </li>
+                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
+                </li>
+                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
+                </li>
+                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
+                </li>
+                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
+                </li>
+                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
+                </li>
+                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
+                </li>
+            </ul>
         </main>
     );
 }
 
 function Tag() {
     return (
-        <main className="px-1.5 pb-0.5 bg-gray-400 text-white text-sm rounded-md">
-            Tag
+        <main className="px-1.5 pb-0.5 bg-gray-400 text-white text-xs rounded-xs font-semibold">
+            Testing
         </main>
     );
 }
