@@ -33,11 +33,11 @@ function Header({ action: setOpen }: { action: Dispatch<boolean> }) {
                 <h1 className="text-neutral text-2xl">Workspace</h1>
                 <ThemeSelector />
             </section>
-            <button className="bg-accent cursor-pointer rounded-full px-2 py-2">
+            <a className="bg-accent cursor-pointer rounded-full px-2 py-2" href="/account">
                 <svg className="me-[-0.5px]" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                     <path className="fill-white" d="M8 1.6C7.05701 1.6 6.15264 1.93714 5.48584 2.53726C4.81905 3.13737 4.44444 3.95131 4.44444 4.8C4.44444 5.64869 4.81905 6.46263 5.48584 7.06274C6.15264 7.66286 7.05701 8 8 8C8.94299 8 9.84736 7.66286 10.5142 7.06274C11.181 6.46263 11.5556 5.64869 11.5556 4.8C11.5556 3.95131 11.181 3.13737 10.5142 2.53726C9.84736 1.93714 8.94299 1.6 8 1.6ZM2.66667 4.8C2.66667 3.52696 3.22857 2.30606 4.22876 1.40589C5.22896 0.505713 6.58551 0 8 0C9.41449 0 10.771 0.505713 11.7712 1.40589C12.7714 2.30606 13.3333 3.52696 13.3333 4.8C13.3333 6.07304 12.7714 7.29394 11.7712 8.19411C10.771 9.09429 9.41449 9.6 8 9.6C6.58551 9.6 5.22896 9.09429 4.22876 8.19411C3.22857 7.29394 2.66667 6.07304 2.66667 4.8ZM4.44444 12.8C3.7372 12.8 3.05892 13.0529 2.55883 13.5029C2.05873 13.953 1.77778 14.5635 1.77778 15.2C1.77778 15.4122 1.68413 15.6157 1.51743 15.7657C1.35073 15.9157 1.12464 16 0.888889 16C0.653141 16 0.427048 15.9157 0.260349 15.7657C0.0936505 15.6157 0 15.4122 0 15.2C0 14.1391 0.468253 13.1217 1.30175 12.3716C2.13524 11.6214 3.2657 11.2 4.44444 11.2H11.5556C12.7343 11.2 13.8648 11.6214 14.6983 12.3716C15.5317 13.1217 16 14.1391 16 15.2C16 15.4122 15.9064 15.6157 15.7397 15.7657C15.573 15.9157 15.3469 16 15.1111 16C14.8754 16 14.6493 15.9157 14.4826 15.7657C14.3159 15.6157 14.2222 15.4122 14.2222 15.2C14.2222 14.5635 13.9413 13.953 13.4412 13.5029C12.9411 13.0529 12.2628 12.8 11.5556 12.8H4.44444Z" />
                 </svg>
-            </button>
+            </a>
         </header>
     );
 }
@@ -69,7 +69,7 @@ function ThemeSelector() {
 
 function Board() {
     return (
-        <section className="flex items-center justify-between gap-4 border-b border-gray-300 px-4 py-2 cursor-pointer last:border-0">
+        <a href='/board' className="flex items-center justify-between gap-4 border-b border-gray-300 px-4 py-2 cursor-pointer last:border-0">
             <div className="flex items-center gap-2">
                 <div className="h-14 w-32 rounded-2xl bg-gray-300"></div>
                 <h2 className="text-neutral text-xl">Board Title</h2>
@@ -78,6 +78,6 @@ function Board() {
                 <p className="font-semibold">last updated:</p>
                 <p className="text-center font-bold">2023-01-01</p>
             </div>
-        </section>
+        </a>
     );
 }

@@ -34,7 +34,7 @@ function List() {
 function Task() {
     const extended = true;
     return (
-        <main className="bg-primary text-neutral flex w-full min-w-48 max-h-56 flex-col items-center px-4 py-1.5 gap-1 justify-between rounded-lg">
+        <main className="bg-primary text-neutral flex max-h-56 w-full min-w-48 flex-col items-center justify-between gap-1 rounded-lg px-4 py-1.5">
             <header className="flex w-full items-center justify-between">
                 <h2 className="text-2xl">Title</h2>
                 <section className="flex flex-col items-center justify-between">
@@ -43,7 +43,7 @@ function Task() {
                         <svg className="cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                             {!extended ? (
                                 /* prettier-ignore */
-                                <path id="extend-card" className="fill-neutral stroke-neutral" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7v14" />
+                                <path id="extend-card" className="fill-neutral stroke-neutral" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14m-7-7v14" />
                             ) : (
                                 <path id="shrink-card" className="fill-neutral" d="M19 11H5a1 1 0 0 0 0 2h14a1 1 0 0 0 0-2" />
                             )}
@@ -55,34 +55,25 @@ function Task() {
             <section className="flex w-full items-center gap-2">
                 <Tag />
             </section>
-            <article className="h-32 line-clamp-5 text-justify">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Omnis expedita ratione, nemo atque cupiditate facilis commodi culpa vel corporis odit officia saepe laborum incidunt quos voluptatem animi consequatur libero aspernatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure fugiat, atque fuga soluta optio tempora neque vel! Sapiente alias, numquam culpa laborum reprehenderit hic eos natus, debitis nemo beatae atque.
+            <article className="line-clamp-5 h-32 text-justify">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Omnis expedita ratione, nemo atque cupiditate facilis
+                commodi culpa vel corporis odit officia saepe laborum incidunt quos voluptatem animi consequatur libero
+                aspernatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure fugiat, atque fuga soluta optio tempora
+                neque vel! Sapiente alias, numquam culpa laborum reprehenderit hic eos natus, debitis nemo beatae atque.
             </article>
-            <ul className="flex w-full items-center overflow-x-clip self-start gap-1 [mask-image:linear-gradient(to_left,transparent,black_50px)]">
-                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
-                </li>
-                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
-                </li>
-                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
-                </li>
-                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
-                </li>
-                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
-                </li>
-                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
-                </li>
-                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
-                </li>
-                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
-                </li>
-                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
-                </li>
-                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
-                </li>
-                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
-                </li>
-                <li className="h-5 w-5 shrink-0 bg-gray-500 rounded-full">
-                </li>
+            <ul className="flex w-full items-center gap-1 self-start overflow-x-clip [mask-image:linear-gradient(to_left,transparent,black_50px)]">
+                <li className="h-5 w-5 shrink-0 rounded-full bg-gray-500"></li>
+                <li className="h-5 w-5 shrink-0 rounded-full bg-gray-500"></li>
+                <li className="h-5 w-5 shrink-0 rounded-full bg-gray-500"></li>
+                <li className="h-5 w-5 shrink-0 rounded-full bg-gray-500"></li>
+                <li className="h-5 w-5 shrink-0 rounded-full bg-gray-500"></li>
+                <li className="h-5 w-5 shrink-0 rounded-full bg-gray-500"></li>
+                <li className="h-5 w-5 shrink-0 rounded-full bg-gray-500"></li>
+                <li className="h-5 w-5 shrink-0 rounded-full bg-gray-500"></li>
+                <li className="h-5 w-5 shrink-0 rounded-full bg-gray-500"></li>
+                <li className="h-5 w-5 shrink-0 rounded-full bg-gray-500"></li>
+                <li className="h-5 w-5 shrink-0 rounded-full bg-gray-500"></li>
+                <li className="h-5 w-5 shrink-0 rounded-full bg-gray-500"></li>
             </ul>
         </main>
     );
