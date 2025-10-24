@@ -20,7 +20,7 @@ export interface RestoreUserOptions extends ConstructorOptions {
 }
 
 export class User {
-    private readonly id: string;
+    public readonly id: string;
     public name: string;
     public email: string;
     private password?: string;

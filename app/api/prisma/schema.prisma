@@ -1,88 +1,104 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/client"
+    provider = "prisma-client"
+    output   = "../src/generated/client"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
-model board_user {
-  id       Int             @id(map: "pk_board_user") @default(autoincrement())
-  board_id String          @db.Uuid
-  user_id  String          @db.Uuid
-  role     board_user_role
-  boards   boards          @relation(fields: [board_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_board_user_board")
-  users    users           @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_board_user_user")
+model Board_user {
+    id       Int             @id(map: "pk_board_user") @default(autoincrement())
+    board_id String          @db.Uuid
+    user_id  String          @db.Uuid
+    role     Board_user_role
+    Board    Board           @relation(fields: [board_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_board_user_boards")
+    User     User            @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_board_user_users")
+
+    @@map("board_user")
 }
 
-model boards {
-  id         String       @id(map: "pk_boards") @db.Uuid
-  title      String       @db.VarChar(255)
-  updated_at DateTime?    @db.Timestamp(6)
-  board_user board_user[]
-  lists      lists[]
-  tags       tags[]
+model Board {
+    id         String       @id(map: "pk_boards") @db.Uuid
+    title      String       @db.VarChar(255)
+    updated_at DateTime?    @db.Timestamp(6)
+    Board_user Board_user[]
+    List       List[]
+    Tag        Tag[]
+
+    @@map("boards")
 }
 
-model lists {
-  id       Int     @id(map: "pk_lists") @default(autoincrement())
-  title    String  @db.VarChar(255)
-  position Int
-  board_id String  @db.Uuid
-  boards   boards  @relation(fields: [board_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_lists_boards")
-  tasks    tasks[]
+model List {
+    id       Int    @id(map: "pk_lists") @default(autoincrement())
+    title    String @db.VarChar(255)
+    position Int
+    board_id String @db.Uuid
+    Board    Board  @relation(fields: [board_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_lists_boards")
+    Task     Task[]
+
+    @@map("lists")
 }
 
-model tag_task {
-  id      Int    @id(map: "pk_tag_task") @default(autoincrement())
-  tag_id  Int
-  task_id BigInt
-  tags    tags   @relation(fields: [tag_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_tag_task_tag")
-  tasks   tasks  @relation(fields: [task_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_tag_task_task")
+model Tag_task {
+    id      Int    @id(map: "pk_tag_task") @default(autoincrement())
+    tag_id  Int
+    task_id BigInt
+    Tag     Tag    @relation(fields: [tag_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_tag_task_tags")
+    Task    Task   @relation(fields: [task_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_tag_task_tasks")
+
+    @@map("tag_task")
 }
 
-model tags {
-  id       Int        @id(map: "pk_tags") @default(autoincrement())
-  name     String     @db.VarChar(255)
-  color    String?    @db.VarChar(6)
-  board_id String     @db.Uuid
-  tag_task tag_task[]
-  boards   boards     @relation(fields: [board_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_tags_boards")
+model Tag {
+    id       Int        @id(map: "pk_tags") @default(autoincrement())
+    name     String     @db.VarChar(255)
+    color    String?    @db.VarChar(6)
+    board_id String     @db.Uuid
+    Tag_task Tag_task[]
+    Board    Board      @relation(fields: [board_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_tags_boards")
+
+    @@map("tags")
 }
 
-model task_user {
-  id      Int    @id(map: "pk_task_user") @default(autoincrement())
-  task_id BigInt
-  user_id String @db.Uuid
-  tasks   tasks  @relation(fields: [task_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_task_user_task")
-  users   users  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_task_user_user")
+model Task_user {
+    id      Int    @id(map: "pk_task_user") @default(autoincrement())
+    task_id BigInt
+    user_id String @db.Uuid
+    Task    Task   @relation(fields: [task_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_task_user_tasks")
+    User    User   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_task_user_users")
+
+    @@map("task_user")
 }
 
-model tasks {
-  id        BigInt      @id(map: "pk_tasks") @default(autoincrement())
-  title     String      @db.VarChar(255)
-  note      String?
-  due_date  DateTime?   @db.Timestamp(6)
-  position  Int
-  lists_id  Int
-  tag_task  tag_task[]
-  task_user task_user[]
-  lists     lists       @relation(fields: [lists_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_tasks_lists")
+model Task {
+    id        BigInt      @id(map: "pk_tasks") @default(autoincrement())
+    title     String      @db.VarChar(255)
+    note      String?
+    due_date  DateTime?   @db.Timestamp(6)
+    position  Int
+    list_id   Int
+    Tag_task  Tag_task[]
+    Task_user Task_user[]
+    List      List        @relation(fields: [list_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_tasks_lists")
+
+    @@map("tasks")
 }
 
-model users {
-  id              String       @id(map: "user_pk") @db.Uuid
-  name            String       @db.VarChar(255)
-  password        String       @db.VarChar(255)
-  email           String       @unique(map: "user_unq_email") @db.VarChar(255)
-  profile_pic_url String?      @db.VarChar(2083)
-  board_user      board_user[]
-  task_user       task_user[]
+model User {
+    id              String       @id(map: "pk_users") @db.Uuid
+    name            String       @db.VarChar(255)
+    password        String       @db.VarChar(255)
+    email           String       @unique(map: "unq_users_email") @db.VarChar(255)
+    profile_pic_url String?      @db.VarChar(2083)
+    Board_user      Board_user[]
+    Task_user       Task_user[]
+
+    @@map("users")
 }
 
-enum board_user_role {
-  adm
-  regular
+enum Board_user_role {
+    adm
+    regular
 }
