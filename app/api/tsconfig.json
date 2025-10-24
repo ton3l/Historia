@@ -1,15 +1,18 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "./",
-    "composite": true,
-    "baseUrl": "./",
-    "paths": { "@api/*": ["src/*"], "@domain/*": ["src/domain/*"] }
-  },
-  "include": ["**/*.ts"],
-  "exclude": ["node_modules", "dist"],
-  "references": [
-    { "path": "../../packages/shared/types" }
-  ]
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "dist",
+        "rootDir": "./",
+        "composite": true,
+        "baseUrl": "./",
+        "paths": { 
+            "@api/*": ["src/*"],
+            "@domain/*": ["src/domain/*"],
+            "@lib/*": ["src/lib/*"],
+            "@prisma/*": ["src/generated/client/*"]
+        }
+    },
+    "include": ["**/*.ts"],
+    "exclude": ["node_modules", "dist"],
+    "references": [{ "path": "../../packages/shared/types" }]
 }

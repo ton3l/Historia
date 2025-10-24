@@ -1,8 +1,9 @@
 import { ValidationException } from '@domain/exceptions/validation.exception';
 import type { List } from './list.entity';
+import { v7 as uuidv7 } from 'uuid';
 
 interface ConstructorOptions {
-    id?: number;
+    id: string;
     title: string;
     lists?: Array<List>;
     updatedAt?: Date;
@@ -11,12 +12,12 @@ interface ConstructorOptions {
 export interface CreateBoardOptions extends Omit<ConstructorOptions, 'id' | 'updatedAt'> {}
 
 export interface RestoreBoardOptions extends ConstructorOptions {
-    id: number;
+    id: string;
     updatedAt: Date;
 }
 
 export class Board {
-    private id?: number; // auto-increment ID
+    private readonly id: string;
     private title: string;
     private lists: Array<List>;
     private updatedAt?: Date;
@@ -33,8 +34,10 @@ export class Board {
         const { title } = options;
 
         Board.validateTitle(title);
+        const id = uuidv7();
 
         const board = new Board({
+            id,
             title,
         });
 

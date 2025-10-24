@@ -17,7 +17,7 @@ export interface RestoreTaskOptions extends ConstructorOptions {
 }
 
 export class Task {
-    private id?: number; // autoincrement ID
+    private readonly id?: number; // autoincrement ID
     private title: string;
     private note: string;
     private position: number;

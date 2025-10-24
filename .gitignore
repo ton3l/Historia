@@ -149,4 +149,4 @@ desktop.ini
 GEMINI*
 
 #prisma-client
-**/prisma/generated/
+**/generated/

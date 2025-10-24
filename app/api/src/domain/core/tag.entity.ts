@@ -13,7 +13,7 @@ export interface RestoreTagOptions extends ConstructorOptions {
 }
 
 export class Tag {
-    private id?: number; // autoincrement ID
+    private readonly id?: number; // autoincrement ID
     private name: string;
     private color: string;
 

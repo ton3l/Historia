@@ -15,7 +15,7 @@ export interface RestoreListOptions extends ConstructorOptions {
 }
 
 export class List {
-    private id?: number; // auto-increment ID
+    private readonly id?: number; // auto-increment ID
     private title: string;
     public position: number;
     private tasks: Array<Task>;

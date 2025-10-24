@@ -1,6 +1,6 @@
-import { User } from '../core/user.entity';
+import { User } from '@domain/core/user.entity';
 
-export interface UserRepository {
+export interface IUserRepository {
     create(user: User): Promise<User>;
     findById(id: string): Promise<User | null>;
     findByEmail(email: string): Promise<User | null>;

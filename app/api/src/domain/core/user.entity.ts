@@ -1,5 +1,6 @@
 import { ValidationException } from '@domain/exceptions/validation.exception';
 import type { Encryptor } from '@domain/interfaces/encryptor.interface';
+import { validateEmail } from '@domain/utils/validators';
 import { v7 as uuidv7 } from 'uuid';
 
 interface ConstructorOptions {
@@ -19,7 +20,7 @@ export interface RestoreUserOptions extends ConstructorOptions {
 }
 
 export class User {
-    private id: string;
+    private readonly id: string;
     public name: string;
     public email: string;
     private password?: string;
@@ -36,7 +37,7 @@ export class User {
         const { name, email, rawPassword, encryptor } = options;
 
         User.validateName(name);
-        User.validateEmail(email);
+        validateEmail(email);
 
         const id = uuidv7();
 
@@ -69,6 +70,15 @@ export class User {
         this.password = await encryptor.hash(rawPassword);
     }
 
+    public toJSON() {
+        return {
+            id: this.id,
+            name: this.name,
+            email: this.email,
+            password: this.password,
+        };
+    }
+
     private static validateName(name: string): void {
         if (!name) {
             throw new ValidationException({ message: 'Name is required', showValue: true, value: name });
@@ -84,14 +94,6 @@ export class User {
         }
         if (password.length < 4) {
             throw new ValidationException({ message: 'Password must be at least 4 characters long', showValue: false });
-        }
-    }
-
-    private static validateEmail(email: string): void {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!emailRegex.test(email)) {
-            throw new ValidationException({ message: 'Invalid email format', showValue: true, value: email });
         }
     }
 }

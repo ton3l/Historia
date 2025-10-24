@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client"
-  output   = "./generated/client"
+  output   = "../src/generated/client"
 }
 
 datasource db {
@@ -10,7 +10,7 @@ datasource db {
 
 model board_user {
   id       Int             @id(map: "pk_board_user") @default(autoincrement())
-  board_id Int
+  board_id String          @db.Uuid
   user_id  String          @db.Uuid
   role     board_user_role
   boards   boards          @relation(fields: [board_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_board_user_board")
@@ -18,7 +18,7 @@ model board_user {
 }
 
 model boards {
-  id         Int          @id(map: "pk_boards") @default(autoincrement())
+  id         String       @id(map: "pk_boards") @db.Uuid
   title      String       @db.VarChar(255)
   updated_at DateTime?    @db.Timestamp(6)
   board_user board_user[]
@@ -30,7 +30,7 @@ model lists {
   id       Int     @id(map: "pk_lists") @default(autoincrement())
   title    String  @db.VarChar(255)
   position Int
-  board_id Int
+  board_id String  @db.Uuid
   boards   boards  @relation(fields: [board_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_lists_boards")
   tasks    tasks[]
 }
@@ -47,7 +47,7 @@ model tags {
   id       Int        @id(map: "pk_tags") @default(autoincrement())
   name     String     @db.VarChar(255)
   color    String?    @db.VarChar(6)
-  board_id Int
+  board_id String     @db.Uuid
   tag_task tag_task[]
   boards   boards     @relation(fields: [board_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_tags_boards")
 }
