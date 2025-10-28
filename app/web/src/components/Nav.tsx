@@ -16,6 +16,8 @@ function Nav() {
     return (
         <>
             <Modal handleOpen={[handleOpenModal, setHandleOpenModal]} />
+            <button>
+            </button>
             <nav className="bg-accent fixed bottom-0 flex w-[100dvw] justify-between px-16 py-4">
                 <p className="text-neutral"></p>
                 <p className="text-3xl text-white">{title}</p>

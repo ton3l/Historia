@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 function Board() {
     return (
         <main className="flex w-full gap-2 p-4">
@@ -32,13 +34,22 @@ function List() {
 }
 
 function Task() {
-    const extended = true;
+    const [extended, setExtended] = useState(false);
+
+    function toggleExtended() {
+        if (!extended) {
+            setExtended(true);
+            return;
+        }
+        setExtended(false);
+    }
+
     return (
         <main className="bg-primary text-neutral flex max-h-56 w-full min-w-48 flex-col items-center justify-between gap-1 rounded-lg px-4 py-1.5">
             <header className="flex w-full items-center justify-between">
                 <h2 className="text-2xl">Title</h2>
                 <section className="flex flex-col items-center justify-between">
-                    <div>
+                    <div onClick={toggleExtended}>
                         {/* prettier-ignore */}
                         <svg className="cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                             {!extended ? (
@@ -55,11 +66,9 @@ function Task() {
             <section className="flex w-full items-center gap-2">
                 <Tag />
             </section>
-            <article className="line-clamp-5 h-32 text-justify">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Omnis expedita ratione, nemo atque cupiditate facilis
-                commodi culpa vel corporis odit officia saepe laborum incidunt quos voluptatem animi consequatur libero
-                aspernatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure fugiat, atque fuga soluta optio tempora
-                neque vel! Sapiente alias, numquam culpa laborum reprehenderit hic eos natus, debitis nemo beatae atque.
+            <article className={"line-clamp-5 text-justify transition-[max-height] ease-in-out duration-400 " + (extended ? "max-h-32" : "max-h-0")}>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequatur commodi illo doloremque, quo eveniet quam quidem necessitatibus perspiciatis amet temporibus ipsum. Vel ea est in similique quo! Consequuntur, repellendus minus?
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequatur commodi illo doloremque, quo eveniet quam quidem necessitatibus perspiciatis amet temporibus ipsum. Vel ea est in similique quo! Consequuntur, repellendus minus?
             </article>
             <ul className="flex w-full items-center gap-1 self-start overflow-x-clip [mask-image:linear-gradient(to_left,transparent,black_50px)]">
                 <li className="h-5 w-5 shrink-0 rounded-full bg-gray-500"></li>

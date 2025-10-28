@@ -6,7 +6,7 @@ import { User } from '@domain/core/user.entity';
 import { UserMapper } from './mappers/user.mapper';
 import prisma from '@lib/prisma';
 
-export class PrismaUserRepository implements IUserRepository {
+export class PrismaUserPersistence implements IUserRepository {
     constructor() {}
 
     async create(user: User): Promise<User> {
