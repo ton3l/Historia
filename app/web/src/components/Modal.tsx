@@ -7,13 +7,13 @@ function Modal({ handleOpen }: { handleOpen: [boolean, Dispatch<boolean>] }) {
     return (
         <MUIModal open={open}>
             <main className="bg-primary mx-auto my-[15dvh] flex h-[60dvh] w-[50dvw] flex-col rounded-md">
+                    <button className='bg-accent p-2 w-fit rounded-sm cursor-pointer fixed mt-[55.5dvh] ms-2'>
+                        <svg className="cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                            <path className="fill-white stroke-white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14m-7-7v14" /> 
+                        </svg>
+                    </button>
                 <Header action={setOpen} />
                 <section className="flex flex-col overflow-y-auto">
-                    <Board />
-                    <Board />
-                    <Board />
-                    <Board />
-                    <Board />
                     <Board />
                 </section>
             </main>
