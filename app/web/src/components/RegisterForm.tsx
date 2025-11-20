@@ -1,0 +1,56 @@
+import TextField from '@components/TextField';
+import GoogleButton from '@components/GoogleButton'
+import { Button } from '@mui/material';
+import { useState } from 'react';
+
+function RegisterForm() {
+    const [register, setRegister] = useState({
+        username: '',
+        email: '',
+        password: '',
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+
+        setRegister((prevInputs) => ({
+            ...prevInputs,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        console.log(register);
+    };
+
+    return (
+        <form className="flex flex-col items-center gap-4" onSubmit={handleSubmit}>
+            <TextField className="w-80" variant="outlined" label="Username" onChange={handleChange} value={register.username} />
+            <TextField
+                className="w-80"
+                variant="outlined"
+                label="Email"
+                type="email"
+                onChange={handleChange}
+                value={register.email}
+            />
+            <TextField
+                className="w-80"
+                id="outlined-basic"
+                label="Password"
+                variant="outlined"
+                type="password"
+                onChange={handleChange}
+                value={register.password}
+            />
+            <GoogleButton />
+            <Button className="bg-accent w-fit" variant="contained" type="submit" disableElevation>
+                Register
+            </Button>
+        </form>
+    );
+}
+
+export default RegisterForm;
