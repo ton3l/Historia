@@ -1,5 +1,6 @@
+import { AccountService } from '@services/account.service';
+import GoogleButton from '@components/GoogleButton';
 import TextField from '@components/TextField';
-import GoogleButton from '@components/GoogleButton'
 import { Button } from '@mui/material';
 import { useState } from 'react';
 
@@ -22,7 +23,7 @@ function RegisterForm() {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        console.log(register);
+        
     };
 
     return (
@@ -46,7 +47,7 @@ function RegisterForm() {
                 value={register.password}
             />
             <GoogleButton />
-            <Button className="bg-accent w-fit" variant="contained" type="submit" disableElevation>
+            <Button className="bg-accent w-fit cursor-pointer" variant="contained" type="submit" disableElevation>
                 Register
             </Button>
         </form>

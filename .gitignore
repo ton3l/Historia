@@ -141,6 +141,7 @@ vite.config.ts.timestamp-*
 # SSL
 *.key
 *.crt
+*.pem
 
 #Windows
 desktop.ini
