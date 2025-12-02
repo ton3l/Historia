@@ -23,10 +23,10 @@ function Nav() {
     }
 
     return (
-        <div className='fixed bottom-0 flex flex-col w-fit gap-2'>
+        <div className='fixed bottom-0 flex flex-col gap-2'>
             <Modal handleOpen={[modalVisibility, setModalVisibility]} />
 
-            <button className='self-end bg-accent p-3 rounded-full me-8 cursor-pointer' onClick={toggleNav}>
+            <button className={'absolute right-2 w-fit bg-accent p-3 rounded-full cursor-pointer transition-all ease-in-out duration-350 ' + (navVisibility ? 'bottom-18' : 'bottom-2')} onClick={toggleNav}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                     <g fill="none">
                         <path fill="#fff" d="M20 17.5a1.5 1.5 0 0 1 .144 2.993L20 20.5H4a1.5 1.5 0 0 1-.144-2.993L4 17.5zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 0 1 0-3zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 1 1 0-3z" />

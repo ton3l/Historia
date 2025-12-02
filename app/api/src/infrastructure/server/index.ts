@@ -1,7 +1,8 @@
 import express from 'express';
 import https from 'https';
-import fs from 'fs';
+import cors from 'cors';
 import path from 'path';
+import fs from 'fs';
 
 const options = {
     key: fs.readFileSync(path.resolve(__dirname, 'config/private.pem')),
@@ -9,5 +10,7 @@ const options = {
 };
 
 export const app = express();
+
 export const port = Number(process.env.PORT) || 3000;
+
 export const httpsServer = https.createServer(options, app);

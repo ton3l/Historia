@@ -22,15 +22,24 @@ function RegisterForm() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log(register);
 
-        
+        AccountService.register(register.username, register.email, register.password);
     };
 
     return (
         <form className="flex flex-col items-center gap-4" onSubmit={handleSubmit}>
-            <TextField className="w-80" variant="outlined" label="Username" onChange={handleChange} value={register.username} />
             <TextField
                 className="w-80"
+                name="username"
+                variant="outlined"
+                label="Username"
+                onChange={handleChange}
+                value={register.username}
+            />
+            <TextField
+                className="w-80"
+                name="email"
                 variant="outlined"
                 label="Email"
                 type="email"
@@ -39,6 +48,7 @@ function RegisterForm() {
             />
             <TextField
                 className="w-80"
+                name="password"
                 id="outlined-basic"
                 label="Password"
                 variant="outlined"

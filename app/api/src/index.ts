@@ -1,11 +1,16 @@
 import { app, httpsServer, port } from './infrastructure/server';
-import type { Application } from 'express';
+import type { Application, Request, Response } from 'express';
 import https from 'https';
+import cors from 'cors';
 
-type ConstructorOptions = {
+interface ConstructorOptions {
     app: Application;
     port: number;
     httpsServer: https.Server;
+};
+
+interface InitOptions extends ConstructorOptions {  
+    router: any;
 };
 
 class API {
@@ -15,6 +20,7 @@ class API {
 
     private constructor(options: ConstructorOptions) {
         this.app = options.app;
+        this.app.use(cors());
         this.port = options.port;
         this.httpsServer = options.httpsServer;
     }
@@ -25,8 +31,12 @@ class API {
     }
 
     private listen() {
-        this.httpsServer.listen(this.port, () => {
+        this.app.listen(this.port, () => {
             console.log(`API listening on port ${this.port}`);
+        });
+
+        this.app.post('/api/register', (req: Request, res: Response) => {
+            console.log(req.body);
         });
     }
 }

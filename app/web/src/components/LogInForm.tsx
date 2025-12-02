@@ -1,4 +1,5 @@
 import GoogleButton from '@components/GoogleButton';
+import { AccountService } from '@services/account.service';
 import TextField from '@components/TextField';
 import { Button } from '@mui/material';
 import { useState } from "react";
@@ -22,6 +23,8 @@ function LogInForm() {
         e.preventDefault();
 
         console.log(logIn);
+
+        AccountService.login(logIn.email, logIn.password);
     };
 
     return (
