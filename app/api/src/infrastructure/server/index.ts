@@ -10,6 +10,8 @@ const options = {
 };
 
 export const app = express();
+app.use(cors());
+app.use(express.json());
 
 export const port = Number(process.env.PORT) || 3000;
 

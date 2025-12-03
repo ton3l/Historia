@@ -7,7 +7,6 @@ export class Argon2Encryptor implements Encryptor {
     }
 
     async verify(plainText: string, hash: string): Promise<boolean> {
-        const isPasswordValid = await argon.verify(hash, plainText);
-        return isPasswordValid;
+        return await argon.verify(hash, plainText);
     }
 }

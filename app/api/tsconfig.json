@@ -10,7 +10,8 @@
             "@domain/*": ["src/domain/*"],
             "@infrastructure/*": ["src/infrastructure/*"],
             "@lib/*": ["src/lib/*"],
-            "@prisma/*": ["src/generated/client/*"]
+            "@prisma/*": ["src/generated/client/*"],
+            "@server/*": ["src/infrastructure/server/*"],
         }
     },
     "include": ["**/*.ts"],

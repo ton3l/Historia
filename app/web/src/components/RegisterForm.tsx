@@ -20,11 +20,12 @@ function RegisterForm() {
         }));
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(register);
 
-        AccountService.register(register.username, register.email, register.password);
+        const response = await AccountService.register(register.username, register.email, register.password);
+        console.log(response);
     };
 
     return (
