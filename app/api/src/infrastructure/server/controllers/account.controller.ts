@@ -1,9 +1,10 @@
+import { RegisterFormValidator } from '@server/validators/account.validators';
 import type { RegisterForm } from '@historia/types/register-form';
 import type { Request, Response } from 'express';
 
 export class AccountController {
     public static register(req: Request, res: Response) {
-        console.log(req.body);
+        console.log(RegisterFormValidator.parse(req.body));
         res.status(200).send('registered');
     }
 
