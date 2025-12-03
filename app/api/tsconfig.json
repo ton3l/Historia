@@ -12,6 +12,7 @@
             "@lib/*": ["src/lib/*"],
             "@prisma/*": ["src/generated/client/*"],
             "@server/*": ["src/infrastructure/server/*"],
+            "@historia/types/*": ["../../packages/shared/types/src/*"],
         }
     },
     "include": ["**/*.ts"],

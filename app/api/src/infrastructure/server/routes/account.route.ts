@@ -1,13 +1,13 @@
 import { AccountController } from '@server/controllers/account.controller';
-import express from 'express';
+import { BaseRoute } from '@server/routes/base-router.route';
 
-export class AccountRoute {
-    private router = express.Router();
-    private path = '/account';
+export class AccountRoute extends BaseRoute {
+    constructor() {
+        super('/account');
+    }
 
-    constructor() {}
-
-    public getRouter() {
-        return this.router;
+    public init() {
+        this.router.post('/register', AccountController.register);
+        this.router.post('/login', AccountController.login);
     }
 }
