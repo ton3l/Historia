@@ -12,6 +12,7 @@ export default defineConfig({
             '@services': path.resolve(__dirname, 'src/services'),
             '@routes': path.resolve(__dirname, 'src/routes'),
             '@pages': path.resolve(__dirname, 'src/pages'),
+            '@historia/types': path.resolve(__dirname, '..', '..', 'packages', 'shared', 'types', 'src'),
         }
     },
     plugins: [react(), tailwind()],

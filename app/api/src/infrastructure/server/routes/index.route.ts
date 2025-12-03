@@ -1,7 +1,7 @@
 import type { Router as IRouter } from 'express';
 import express from 'express';
 
-class Router {
+export class Router {
     private router = express.Router();
 
     private constructor(routes: IRouter[]) {
@@ -10,9 +10,11 @@ class Router {
         }
     }
 
-    public static create(routes: IRouter[]) {
-        return new Router(routes);
+    public static create(...routes: IRouter[]) {
+        return new Router(routes).router;
     }
 }
 
-export const routes = Router.create([]);
+export const router = Router.create(
+
+);

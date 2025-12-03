@@ -1,16 +1,17 @@
+import type { Application, Router } from 'express';
 import { app, httpsServer, port } from '@server/index';
-import type { Application, Request, Response } from 'express';
+import { router } from '@server/routes/index.route';
 import https from 'https';
 
 interface ConstructorOptions {
     app: Application;
     port: number;
     httpsServer: https.Server;
-};
+}
 
-interface InitOptions extends ConstructorOptions {  
-    router: any;
-};
+interface InitOptions extends ConstructorOptions {
+    router: Router;
+}
 
 class API {
     private app: Application;
@@ -23,20 +24,17 @@ class API {
         this.httpsServer = options.httpsServer;
     }
 
-    public static init(options: ConstructorOptions) {
+    public static init(options: InitOptions) {
         const api = new API(options);
-        api.listen();
+        api.listen(options.router);
     }
 
-    private listen() {
+    private listen(router: Router) {
         this.httpsServer.listen(this.port, () => {
             console.log(`API listening on port ${this.port}`);
         });
 
-        this.app.post('/api/register', (req: Request, res: Response) => {
-            console.log(req.body);
-            res.send(req.body);
-        });
+        this.app.use('/', router);
     }
 }
 
@@ -44,4 +42,5 @@ API.init({
     app,
     port,
     httpsServer,
+    router,
 });

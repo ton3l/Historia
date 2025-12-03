@@ -3,7 +3,7 @@
     "baseUrl": "./",
     "paths": {
       "@historia/*": ["packages/*"],
-      "@historia/types": ["packages/shared/types/src"]
+      "@historia/types/*": ["packages/shared/types/src/*"]
     },
 
     /* <-- Bun settings (changed) --> */

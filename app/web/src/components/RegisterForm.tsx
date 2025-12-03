@@ -1,3 +1,4 @@
+import type { RegisterForm } from '@historia/types/register-form';
 import { AccountService } from '@services/account.service';
 import GoogleButton from '@components/GoogleButton';
 import TextField from '@components/TextField';
@@ -5,7 +6,7 @@ import { Button } from '@mui/material';
 import { useState } from 'react';
 
 function RegisterForm() {
-    const [register, setRegister] = useState({
+    const [register, setRegister] = useState<RegisterForm>({
         username: '',
         email: '',
         password: '',
