@@ -1,6 +1,6 @@
 import type { Board } from '@domain/core/board.entity';
 
-export interface IBoardRepository {
+export interface BoardRepository {
     create(board: Board): Promise<Board>;
     findById(id: number): Promise<Board | null>;
     update(board: Board): Promise<Board>;

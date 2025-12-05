@@ -1,12 +1,12 @@
 import { PrismaClientKnownRequestError } from '@prisma/internal/prismaNamespace';
-import type { IUserRepository } from '@domain/repositories/user.repository';
+import type { UserRepository } from '@domain/repositories/user.repository';
 import { RecordNotFoundException } from '../exceptions/notfound.exception';
 import { validateEmail, validateUUID } from '@domain/utils/validators';
 import { User } from '@domain/core/user.entity';
 import { UserMapper } from './mappers/user.mapper';
 import prisma from '@lib/prisma';
 
-export class PrismaUserPersistence implements IUserRepository {
+export class PrismaUserPersistence implements UserRepository {
     constructor() {}
 
     async create(user: User): Promise<User> {

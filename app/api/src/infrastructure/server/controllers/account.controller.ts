@@ -1,14 +1,17 @@
 import { RegisterFormValidator } from '@server/validators/account.validators';
-import { RegisterUseCase } from '@application/register.usecase';
+import { RegisterUserUseCase } from '@application/register-user.usecase';
 import type { Request, Response } from 'express';
 import { inject, injectable } from 'tsyringe';
 
 @injectable()
 export class AccountController {
-    constructor(@inject(RegisterUseCase) private registerUseCase: RegisterUseCase) {}
+    constructor(@inject(RegisterUserUseCase) private registerUseCase: RegisterUserUseCase) {}
 
     public register = async (req: Request, res: Response) => {
-        console.log(RegisterFormValidator.parse(req.body));
+        const { username, email, rawPassword } = RegisterFormValidator.parse(req.body);
+
+        console.log(await this.registerUseCase.execute({ username, email, rawPassword }));
+
         res.status(200).send('registered');
     }
 

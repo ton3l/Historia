@@ -6,11 +6,11 @@
         "composite": true,
         "baseUrl": "./",
         "paths": { 
-            "@api/*": ["src/*"],
             "@domain/*": ["src/domain/*"],
-            "@infrastructure/*": ["src/infrastructure/*"],
             "@application/*": ["src/application/*"],
-
+            "@infrastructure/*": ["src/infrastructure/*"],
+            
+            "@api/*": ["src/*"],
             "@lib/*": ["src/lib/*"],
             "@prisma/*": ["src/generated/client/*"],
             "@server/*": ["src/infrastructure/server/*"],

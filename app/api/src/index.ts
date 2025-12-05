@@ -6,11 +6,10 @@ import { API } from '@infrastructure/server/index';
 import { container } from 'tsyringe';
 
 const appRouter = container.resolve(AppRouter);
-const router = appRouter.create();
 
 API.init({
     app,
     port,
     httpsServer,
-    router,
+    router: appRouter.create(),
 });
