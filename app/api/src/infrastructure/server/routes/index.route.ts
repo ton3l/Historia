@@ -1,4 +1,4 @@
-import type { BaseRoute } from '@server/routes/base-router.route';
+import type { BaseRoute } from '@infrastructure/server/routes/base.route';
 import { injectAll, singleton } from 'tsyringe';
 import express from 'express';
 
@@ -13,7 +13,7 @@ export class AppRouter {
         }
     }
 
-    public create(...routes: BaseRoute[]) {
+    public getRouter(): express.Router {
         return this.router;
     }
 }

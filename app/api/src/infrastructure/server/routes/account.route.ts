@@ -1,10 +1,10 @@
 import { AccountController } from '@server/controllers/account.controller';
-import { BaseRoute } from '@server/routes/base-router.route';
-import { inject, injectable } from 'tsyringe';
+import { BaseRoute } from '@server/routes/base.route';
+import { injectable } from 'tsyringe';
 
 @injectable()
 export class AccountRoute extends BaseRoute {
-    constructor(@inject(AccountController) private accountController: AccountController) {
+    constructor(private accountController: AccountController) {
         super('/account');
     }
 

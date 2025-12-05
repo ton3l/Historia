@@ -9,6 +9,7 @@ interface ConstructorOptions {
 
 interface InitOptions extends ConstructorOptions {
     router: Router;
+    middlewareKernel: Router;
 }
 
 export class API {
@@ -24,14 +25,17 @@ export class API {
 
     public static init(options: InitOptions) {
         const api = new API(options);
-        api.listen(options.router);
+        api.listen(options.router, options.middlewareKernel);
     }
 
-    private listen(router: Router) {
+    private listen(router: Router, middlewareKernel: Router) {
+        this.app.use(middlewareKernel);
+        this.app.use('/', router);
+        
+
         this.httpsServer.listen(this.port, () => {
             console.log(`API listening on port ${this.port}`);
         });
 
-        this.app.use('/', router);
     }
 }

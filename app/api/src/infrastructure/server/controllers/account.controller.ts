@@ -5,12 +5,12 @@ import { inject, injectable } from 'tsyringe';
 
 @injectable()
 export class AccountController {
-    constructor(@inject(RegisterUserUseCase) private registerUseCase: RegisterUserUseCase) {}
+    constructor(private registerUseCase: RegisterUserUseCase) {}
 
     public register = async (req: Request, res: Response) => {
         const { username, email, rawPassword } = RegisterFormValidator.parse(req.body);
 
-        console.log(await this.registerUseCase.execute({ username, email, rawPassword }));
+        await this.registerUseCase.execute({ username, email, rawPassword });
 
         res.status(200).send('registered');
     }
