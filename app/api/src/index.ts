@@ -1,6 +1,12 @@
+import 'reflect-metadata';
+import '@infrastructure/dependence-injection/container.di';
 import { app, httpsServer, port } from '@server/config/index';
-import { router } from '@server/routes/index.route';
+import { AppRouter } from '@server/routes/index.route';
 import { API } from '@infrastructure/server/index';
+import { container } from 'tsyringe';
+
+const appRouter = container.resolve(AppRouter);
+const router = appRouter.create();
 
 API.init({
     app,

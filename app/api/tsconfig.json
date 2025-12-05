@@ -9,11 +9,15 @@
             "@api/*": ["src/*"],
             "@domain/*": ["src/domain/*"],
             "@infrastructure/*": ["src/infrastructure/*"],
+            "@application/*": ["src/application/*"],
+
             "@lib/*": ["src/lib/*"],
             "@prisma/*": ["src/generated/client/*"],
             "@server/*": ["src/infrastructure/server/*"],
             "@historia/types/*": ["../../packages/shared/types/src/*"],
-        }
+        },
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
     },
     "include": ["**/*.ts"],
     "exclude": ["node_modules", "dist"],

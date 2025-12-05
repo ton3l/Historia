@@ -5,8 +5,8 @@ import path from 'path';
 import fs from 'fs';
 
 const options = {
-    key: fs.readFileSync(path.resolve(__dirname, 'config/private.pem')),
-    cert: fs.readFileSync(path.resolve(__dirname, 'config/certificate.pem')),
+    key: fs.readFileSync(path.resolve(__dirname, 'private.pem')),
+    cert: fs.readFileSync(path.resolve(__dirname, 'certificate.pem')),
 };
 
 export const app = express();

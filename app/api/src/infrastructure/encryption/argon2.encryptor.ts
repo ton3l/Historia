@@ -1,6 +1,8 @@
 import type { Encryptor } from '@domain/interfaces/encryptor.interface';
 import * as argon from 'argon2';
+import { injectable } from 'tsyringe';
 
+@injectable()
 export class Argon2Encryptor implements Encryptor {
     async hash(plainText: string): Promise<string> {
         return await argon.hash(plainText);

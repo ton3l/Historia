@@ -1,20 +1,19 @@
-import { AccountRoute } from '@server/routes/account.route';
 import type { BaseRoute } from '@server/routes/base-router.route';
+import { injectAll, singleton } from 'tsyringe';
 import express from 'express';
 
-export class Router {
+@singleton()
+export class AppRouter {
     private router = express.Router();
 
-    private constructor(routes: BaseRoute[]) {
+    constructor(@injectAll('Routes') private routes: BaseRoute[]) {
         for (const route of routes) {
             route.init();
             this.router.use(route.getPath(), route.getRouter());
         }
     }
 
-    public static create(...routes: BaseRoute[]) {
-        return new Router(routes).router;
+    public create(...routes: BaseRoute[]) {
+        return this.router;
     }
 }
-
-export const router = Router.create(new AccountRoute());
