@@ -1,5 +1,4 @@
 import { RegisterFormValidator } from '@server/validators/account.validators';
-import type { RegisterForm } from '@historia/types/register-form';
 import type { Request, Response } from 'express';
 
 export class AccountController {

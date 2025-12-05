@@ -1,4 +1,4 @@
-import type { Encryptor } from '../../domain/interfaces/encryptor.interface';
+import type { Encryptor } from '@domain/interfaces/encryptor.interface';
 import * as argon from 'argon2';
 
 export class Argon2Encryptor implements Encryptor {

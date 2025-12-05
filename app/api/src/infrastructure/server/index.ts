@@ -1,18 +1,37 @@
-import express from 'express';
+import type { Application, Router } from 'express';
 import https from 'https';
-import cors from 'cors';
-import path from 'path';
-import fs from 'fs';
 
-const options = {
-    key: fs.readFileSync(path.resolve(__dirname, 'config/private.pem')),
-    cert: fs.readFileSync(path.resolve(__dirname, 'config/certificate.pem')),
-};
+interface ConstructorOptions {
+    app: Application;
+    port: number;
+    httpsServer: https.Server;
+}
 
-export const app = express();
-app.use(cors());
-app.use(express.json());
+interface InitOptions extends ConstructorOptions {
+    router: Router;
+}
 
-export const port = Number(process.env.PORT) || 3000;
+export class API {
+    private app: Application;
+    private port: number;
+    private httpsServer: https.Server;
 
-export const httpsServer = https.createServer(options, app);
+    private constructor(options: ConstructorOptions) {
+        this.app = options.app;
+        this.port = options.port;
+        this.httpsServer = options.httpsServer;
+    }
+
+    public static init(options: InitOptions) {
+        const api = new API(options);
+        api.listen(options.router);
+    }
+
+    private listen(router: Router) {
+        this.httpsServer.listen(this.port, () => {
+            console.log(`API listening on port ${this.port}`);
+        });
+
+        this.app.use('/', router);
+    }
+}
