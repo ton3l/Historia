@@ -23,8 +23,8 @@ export class AccountController {
     public login = async (req: Request, res: Response) => {
         const { email, rawPassword } = LogInValidator.parse(req.body);
 
-        await this.logIn.execute({ email, rawPassword });
+        const token = await this.logIn.execute({ email, rawPassword });
 
-        res.status(200).send('logged in');
+        res.status(200).send({ token });
     };
 }

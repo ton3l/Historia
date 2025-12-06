@@ -24,8 +24,7 @@ export class Logger implements BaseMiddleware {
         };
 
         console.log(utils.inspect(requestLog, { showHidden: true, colors: true }));
-        console.log(utils.inspect(responseLog, { showHidden: true, colors: true }));
-        console.log('\n');
+        console.log(utils.inspect(responseLog, { showHidden: true, colors: true }), '\n');
         next();
     }
 }
