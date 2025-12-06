@@ -1,4 +1,4 @@
-import { DomainException } from "./domain.exception";
+import { DomainException } from "@domain/exceptions/domain.exception";
 
 export interface ValidationExceptionOptions {
     message: string;

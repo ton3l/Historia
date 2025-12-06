@@ -9,7 +9,7 @@ export class AccountRoute extends BaseRoute {
     }
 
     public init() {
-        this.router.post('/register', this.accountController.register);
+        this.router.post('/signin', this.accountController.register);
         this.router.post('/login', this.accountController.login);
     }
 }

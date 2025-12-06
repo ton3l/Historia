@@ -6,7 +6,6 @@ import utils from "util";
 @injectable()
 export class Logger implements BaseMiddleware {
     public handle = (req: Request, res: Response, next: NextFunction) => {
-        
         const requestLog = {
             type: "request",
             ip: req.ip,
@@ -20,11 +19,13 @@ export class Logger implements BaseMiddleware {
         const responseLog = {
             type: "response",
             status: res.statusCode,
+            message: res.statusMessage,
             timestamp: new Date().toLocaleString(),
         };
 
         console.log(utils.inspect(requestLog, { showHidden: true, colors: true }));
         console.log(utils.inspect(responseLog, { showHidden: true, colors: true }));
+        console.log('\n');
         next();
     }
 }
