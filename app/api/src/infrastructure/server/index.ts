@@ -1,5 +1,7 @@
-import type { Application, Router } from 'express';
+import type { application, Application, Router } from 'express';
+import { stat } from 'fs';
 import https from 'https';
+import utils from 'util';
 
 interface ConstructorOptions {
     app: Application;
@@ -34,7 +36,14 @@ export class API {
         
 
         this.httpsServer.listen(this.port, () => {
-            console.log(`API listening on port ${this.port}`);
+            const log = {
+                application: "historia-api",
+                running_port: this.port,
+                status: "running",
+                timestamp: new Date().toLocaleString(),
+            }
+
+            console.log(utils.inspect(log, { showHidden: true, colors: true }), '\n');
         });
 
     }
