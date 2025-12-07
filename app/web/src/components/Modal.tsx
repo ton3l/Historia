@@ -69,6 +69,7 @@ function ThemeSelector() {
         else currentTheme += 1;
 
         document.querySelector('html')?.setAttribute('data-theme', themes[currentTheme]);
+        localStorage.setItem('theme', themes[currentTheme]);
     }
 
     return (

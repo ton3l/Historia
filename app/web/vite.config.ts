@@ -13,6 +13,7 @@ export default defineConfig({
             '@routes': path.resolve(__dirname, 'src/routes'),
             '@pages': path.resolve(__dirname, 'src/pages'),
             '@historia/types': path.resolve(__dirname, '..', '..', 'packages', 'shared', 'types', 'src'),
+            '@lib': path.resolve(__dirname, 'src/lib'),
         }
     },
     plugins: [react(), tailwind()],

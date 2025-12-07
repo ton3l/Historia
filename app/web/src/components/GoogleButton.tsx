@@ -1,6 +1,6 @@
 function GoogleButton() {
     return (
-        <div className="rounded-md bg-linear-to-r from-red-700 via-yellow-300 to-blue-700 p-0.5">
+        <div className="rounded-md bg-linear-to-r from-red-700 via-yellow-300 to-blue-700 p-0.5 hidden">
             <div className="rounded-sm bg-white">
                 {/* prettier-ignore */}
                 <button className='cursor-pointer bg-clip-text bg-gray-900 rounded-md p-2 flex items-center gap-2 text-transparent transition hover:bg-linear-to-r hover:from-red-700 hover:via-yellow-600 hover:via-green-500  hover:to-blue-700 font-semibold'>

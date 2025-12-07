@@ -1,15 +1,21 @@
-import axios from 'axios';
+import { api } from "@lib/axios";
 
 export class AccountService {
     static async login(email: string, rawPassword: string) {
-        return axios.post(`${import.meta.env.VITE_API_URL}/account/login`, {
+        const response = await api.post(`/account/login`, {
             email,
             rawPassword,
         });
+
+        if (response.data.token) {
+            localStorage.setItem('token', response.data.token);
+        }
+
+        return response;
     }
 
     static async register(username: string, email: string, rawPassword: string) {
-        return axios.post(`${import.meta.env.VITE_API_URL}/account/register`, {
+        return await api.post(`/account/register`, {
             username,
             email,
             rawPassword,

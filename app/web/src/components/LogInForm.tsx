@@ -22,8 +22,6 @@ function LogInForm() {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        console.log(logIn);
-
         AccountService.login(logIn.email, logIn.password);
     };
 
