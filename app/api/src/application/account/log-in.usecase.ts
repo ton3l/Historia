@@ -26,7 +26,7 @@ export class LogInUseCase {
         const isValid = await this.encryptor.verify(rawPassword, user.toJSON().password!);
         if (!isValid) throw new AccountException({ message: 'Invalid email or password' });
 
-        const token = this.tokenProvider.sign({ id: user.toJSON().id, username: user.toJSON().name });
+        const token = this.tokenProvider.sign({ userId: user.toJSON().id, username: user.toJSON().name });
 
         return token;
     }

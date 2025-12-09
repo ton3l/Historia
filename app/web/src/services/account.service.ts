@@ -15,10 +15,14 @@ export class AccountService {
     }
 
     static async register(username: string, email: string, rawPassword: string) {
-        return await api.post(`/account/register`, {
+        const response = await api.post(`/account/signin`, {
             username,
             email,
             rawPassword,
         });
+
+        window.location.reload();
+
+        return response;
     }
 }

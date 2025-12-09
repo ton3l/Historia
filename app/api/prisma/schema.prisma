@@ -22,7 +22,7 @@ model Board_user {
 model Board {
     id         String       @id(map: "pk_boards") @db.Uuid
     title      String       @db.VarChar(255)
-    updated_at DateTime?    @db.Timestamp(6)
+    updated_at DateTime     @db.Timestamp(6)
     Board_user Board_user[]
     List       List[]
     Tag        Tag[]

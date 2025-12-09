@@ -74,6 +74,14 @@ export class Board {
         this.lists.push(list);
     }
 
+    public toJSON() {
+        return {
+            id: this.id,
+            title: this.title,
+            updatedAt: this.updatedAt,
+        };
+    }
+
     private static validateTitle(title: string): void {
         if (!title) {
             throw new ValidationException({ message: 'Title is required', showValue: true, value: title });
