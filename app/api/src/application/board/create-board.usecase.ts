@@ -3,6 +3,7 @@ import { Board } from '@domain/core/board.entity';
 import { inject, injectable } from 'tsyringe';
 
 export interface CreateBoardOptions {
+    creatorId: string;
     title: string;
 }
 
@@ -13,10 +14,10 @@ export class CreateBoardUseCase {
     ) {}
 
     public async execute(options: CreateBoardOptions) {
-        const { title } = options;
+        const { title, creatorId } = options;
 
         const board = Board.create({ title: title });
 
-        return await this.boardPersistence.create(board);
+        return await this.boardPersistence.create({ board, creatorId });
     }
 }
