@@ -17,7 +17,7 @@
             "@historia/types/*": ["../../packages/shared/types/src/*"],
         },
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
+        "emitDecoratorMetadata": true,
     },
     "include": ["**/*.ts"],
     "exclude": ["node_modules", "dist"],

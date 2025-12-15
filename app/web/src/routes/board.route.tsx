@@ -4,6 +4,6 @@ import Board from '@pages/Board';
 
 export const boardRoute = createRoute({
     getParentRoute: () => rootRoute,
-    path: '/board',
+    path: '/board/$boardId',
     component: Board,
 });

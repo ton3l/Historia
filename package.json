@@ -4,6 +4,9 @@
   "devDependencies": {
     "@types/bun": "latest"
   },
+  "scripts": {
+    "build": "bun build app/api/src/index.ts --target=bun --outdir=app/api/dist --production; cd app/web; bunx vite build"
+  },
   "peerDependencies": {
     "typescript": "^5"
   },

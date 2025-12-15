@@ -2,7 +2,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@historia/*": ["packages/*"],
+      "@historia/api/*": ["app/api/src/*"],
+      "@historia/*": ["/*"],
       "@historia/types/*": ["packages/shared/types/src/*"]
     },
 

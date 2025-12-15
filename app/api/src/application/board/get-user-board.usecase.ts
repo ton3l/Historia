@@ -1,21 +1,22 @@
 import type { BoardRepository } from '@domain/repositories/board.repository';
+import { Board } from '@domain/core/board.entity';
 import { inject, injectable } from 'tsyringe';
 
 export interface GetUserBoardsOptions {
-    boardId: string;
+    userId: string;
 }
 
 @injectable()
-export class GetBoardUseCase {
+export class GetUserBoardsUseCase {
     constructor(
         @inject('BoardRepository') private readonly boardPersistence: BoardRepository,
     ) {}
 
     public async execute(options: GetUserBoardsOptions) {
-        const { boardId } = options;
+        const { userId } = options;
 
-        const board = this.boardPersistence.findById(boardId);
+        const userBoards = this.boardPersistence.findByUser(userId);
 
-        return board;
+        return userBoards;
     }
 }

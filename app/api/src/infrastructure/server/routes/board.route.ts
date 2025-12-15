@@ -11,5 +11,6 @@ export class BoardRoute extends BaseRoute {
     public init() {
         this.router.get('/', this.boardController.getUserBoards);
         this.router.post('/', this.boardController.createBoard);
+        this.router.get('/:id', this.boardController.getBoard);
     }
 }

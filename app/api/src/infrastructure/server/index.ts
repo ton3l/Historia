@@ -1,5 +1,4 @@
 import type { application, Application, Router } from 'express';
-import { stat } from 'fs';
 import https from 'https';
 import utils from 'util';
 
@@ -33,6 +32,7 @@ export class API {
     private listen(router: Router, middlewareKernel: Router) {
         this.app.use(middlewareKernel);
         this.app.use('/', router);
+        this.app.get('/', (req, res) => res.sendFile('index.html'));
         
 
         this.httpsServer.listen(this.port, () => {

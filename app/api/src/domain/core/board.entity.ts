@@ -17,10 +17,10 @@ export interface RestoreBoardOptions extends ConstructorOptions {
 }
 
 export class Board {
-    private readonly id: string;
-    private title: string;
-    private lists: Array<List>;
-    private updatedAt?: Date;
+    public readonly id: string;
+    public title: string;
+    public lists: Array<List>;
+    public updatedAt?: Date;
 
     constructor(options: ConstructorOptions) {
         const { id, title, lists, updatedAt } = options;

@@ -14,7 +14,11 @@ export default defineConfig({
             '@pages': path.resolve(__dirname, 'src/pages'),
             '@historia/types': path.resolve(__dirname, '..', '..', 'packages', 'shared', 'types', 'src'),
             '@lib': path.resolve(__dirname, 'src/lib'),
+            '@hooks': path.resolve(__dirname, 'src/hooks'),
         }
+    },
+    build: {
+        outDir: path.resolve(__dirname, '../api/dist'),  
     },
     plugins: [react(), tailwind()],
 });

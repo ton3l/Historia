@@ -1,9 +1,9 @@
 import Modal from '@components/Modal';
 import { useState } from 'react';
+import { useNav } from '@hooks/NavProvider';
 
 function Nav() {
-    const title = 'Historia';
-    const [navVisibility, setNavVisibility] = useState(true);
+    const { navVisibility, setNavVisibility, title } = useNav();
     const [modalVisibility, setModalVisibility] = useState(false);
 
     function toggleModal() {

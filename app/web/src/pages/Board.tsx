@@ -1,19 +1,46 @@
-import { useState } from "react";
+import { BoardService } from '@services/board.service';
+import { useParams } from '@tanstack/react-router';
+import type { Board as BoardEntity } from '@historia/types/board';
+import type { List as ListEntity } from '@historia/api/src/domain/core/list.entity';
+import { useEffect, useState } from "react";
+import { useNav } from '@hooks/NavProvider';
 
 function Board() {
+    const { boardId } = useParams({ from: '/board/$boardId' });
+    const [board, setBoard] = useState<BoardEntity>({} as BoardEntity);
+    const { navVisibility, title, setTitle } = useNav();
+
+    useEffect(() => {
+        async function fetchBoard() {
+            const response = await BoardService.get(boardId);
+            console.log(response.data.board);
+            setBoard(response.data.board);
+        }
+    
+        fetchBoard();
+    }, [boardId]);
+
     return (
         <main className="flex w-full gap-2 p-4">
+            <button className={'absolute right-16 w-fit bg-accent p-3 rounded-full cursor-pointer transition-all ease-in-out duration-350 ' + (navVisibility ? 'visible bottom-18' : 'invisible bottom-[-64px]')}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 16 16">
+                    <path fill="#fff" d="M9 3a1 1 0 0 0-2 0v4H3a1 1 0 0 0 0 2h4v4a1 1 0 0 0 2 0V9h4a1 1 0 0 0 0-2H9z" />
+                </svg>
+            </button>
+
             <List />
-            <List />
-            <List />
-            <List />
+            {
+                board?.lists?.map((list) => (
+                    <List list={list} key={list.id} />
+                ))
+            }
         </main>
     );
 }
 
 export default Board;
 
-function List() {
+function List({ list } : { list: ListEntity }) {
     return (
         <main className="flex w-full max-w-[calc(100dvw/4)] min-w-64 flex-1 flex-col gap-2">
             <header className="bg-primary flex items-center justify-between rounded-lg p-4">
