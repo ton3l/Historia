@@ -1,4 +1,5 @@
 import { BoardService } from '@services/board.service';
+import { ListService } from '@services/list.service';
 import { useParams } from '@tanstack/react-router';
 import type { Board as BoardEntity } from '@historia/types/board';
 import type { List as ListEntity } from '@historia/api/src/domain/core/list.entity';
@@ -10,25 +11,32 @@ function Board() {
     const [board, setBoard] = useState<BoardEntity>({} as BoardEntity);
     const { navVisibility, title, setTitle } = useNav();
 
+    async function fetchBoard() {
+        const response = await BoardService.get(boardId);
+        setBoard(response.data.board);
+    }
+
     useEffect(() => {
-        async function fetchBoard() {
-            const response = await BoardService.get(boardId);
-            console.log(response.data.board);
-            setBoard(response.data.board);
-        }
-    
         fetchBoard();
     }, [boardId]);
 
+    async function createList() {
+        const position = board.lists?.length ?? 0;
+        await ListService.create(boardId, position);
+        fetchBoard();
+    }
+
     return (
         <main className="flex w-full gap-2 p-4">
-            <button className={'absolute right-16 w-fit bg-accent p-3 rounded-full cursor-pointer transition-all ease-in-out duration-350 ' + (navVisibility ? 'visible bottom-18' : 'invisible bottom-[-64px]')}>
+            <button 
+                onClick={createList}
+                className={'absolute right-16 w-fit bg-accent p-3 rounded-full cursor-pointer transition-all ease-in-out duration-350 ' + (navVisibility ? 'visible bottom-18' : 'invisible bottom-[-64px]')}
+            >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 16 16">
                     <path fill="#fff" d="M9 3a1 1 0 0 0-2 0v4H3a1 1 0 0 0 0 2h4v4a1 1 0 0 0 2 0V9h4a1 1 0 0 0 0-2H9z" />
                 </svg>
             </button>
 
-            <List />
             {
                 board?.lists?.map((list) => (
                     <List list={list} key={list.id} />
@@ -44,7 +52,7 @@ function List({ list } : { list: ListEntity }) {
     return (
         <main className="flex w-full max-w-[calc(100dvw/4)] min-w-64 flex-1 flex-col gap-2">
             <header className="bg-primary flex items-center justify-between rounded-lg p-4">
-                <h1 className="text-neutral text-3xl"> Title </h1>
+                <h1 className="text-neutral text-3xl"> {list.title} </h1>
                 <div className="bg-accent cursor-pointer rounded-full p-1">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 16 16">
                         <path fill="#fff" d="M9 3a1 1 0 0 0-2 0v4H3a1 1 0 0 0 0 2h4v4a1 1 0 0 0 2 0V9h4a1 1 0 0 0 0-2H9z" />

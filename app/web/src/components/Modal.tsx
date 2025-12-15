@@ -1,28 +1,40 @@
+import type { Board as BoardEntity } from '@historia/types/board';
 import { Modal as MUIModal } from '@mui/material';
-import type { Dispatch } from 'react';
+import { type Dispatch, useEffect, useState } from 'react';
+import { BoardService } from '@services/board.service';
 
 function Modal({ handleOpen }: { handleOpen: [boolean, Dispatch<boolean>] }) {
     const [open, setOpen] = handleOpen;
+    const [boards, setBoards] = useState([]);
+
+    async function handleCreateBoard() {
+        await BoardService.create();
+    }
+
+    useEffect(() => {
+        async function fetchBoards() {
+            const response = await BoardService.getAll();
+            setBoards(response.data.boards);
+        }
+
+        if (open) {
+            fetchBoards();
+        }
+    }, [open]);
 
     return (
         <MUIModal open={open}>
-            <main className="bg-primary mx-auto my-[15dvh] flex h-[60dvh] w-[50dvw] flex-col rounded-md relative">
+            <main className="bg-primary relative mx-auto my-[15dvh] flex h-[60dvh] w-[50dvw] flex-col rounded-md">
                 <Header action={setOpen} />
-                <section className="flex flex-col overflow-y-auto flex-1 z-0">
-                    <Board />
-                    <Board />
-                    <Board />
-                    <Board />
-                    <Board />
-                    <Board />
-                    <Board />
-                    <Board />
-                    <Board />
-                    <Board />
-                    <Board />
+                <section className="z-0 flex flex-1 flex-col overflow-y-auto">
+                    {
+                        boards.map((board: BoardEntity) => (
+                            <Board board={board} key={board.id} />
+                        ))
+                    }
                 </section>
-                <footer className='h-[12%] min-h-11 bg-transparent z-1 absolute bottom-0 w-full'>
-                    <button className="bg-accent ms-2 w-fit cursor-pointer rounded-sm p-2">
+                <footer className="absolute bottom-0 z-1 h-[12%] min-h-11 w-full bg-transparent">
+                    <button className="bg-accent ms-2 w-fit cursor-pointer rounded-sm p-2" onClick={handleCreateBoard}>
                         {/* prettier-ignore */}
                         <svg className="cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                             {/* prettier-ignore */}
@@ -39,7 +51,7 @@ export default Modal;
 
 function Header({ action: setOpen }: { action: Dispatch<boolean> }) {
     return (
-        <header className="flex w-full h-[12%] min-h-10 items-center justify-between border-b-1 border-gray-300 px-4 py-2">
+        <header className="flex h-[12%] min-h-10 w-full items-center justify-between border-b-1 border-gray-300 px-4 py-2">
             {/* prettier-ignore */}
             <svg onClick={() => setOpen(false)} className="cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="-4 -4 30 30" fill="none" >
                 {/* prettier-ignore */}
@@ -87,12 +99,15 @@ function ThemeSelector() {
     );
 }
 
-function Board() {
+function Board({ board }: { board: BoardEntity }) {
     return (
-        <a href="/board" className="flex cursor-pointer items-center justify-between gap-4 border-b border-gray-300 px-4 py-2 last:border-0">
+        <a
+            href={`/board/${board.id}`}
+            className="flex cursor-pointer items-center justify-between gap-4 border-b border-gray-300 px-4 py-2 last:border-0"
+        >
             <div className="flex items-center gap-2">
                 <div className="h-14 w-32 rounded-2xl bg-gray-300"></div>
-                <h2 className="text-neutral text-xl">Board Title</h2>
+                <h2 className="text-neutral text-xl">{board.title}</h2>
             </div>
             <div className="text-neutral/50 text-xs">
                 <p className="font-semibold">last updated:</p>

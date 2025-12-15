@@ -23,10 +23,8 @@ function RegisterForm() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(register);
 
         const response = await AccountService.register(register.username, register.email, register.password);
-        console.log(response);
     };
 
     return (

@@ -1,5 +1,3 @@
-export interface Teste {
-  id: string;
-  nome: string;
-  idade: number;
-}
+export type Publicized<T> = {
+  -readonly [P in keyof T]: T[P];
+};

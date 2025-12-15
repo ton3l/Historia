@@ -15,10 +15,10 @@ export interface RestoreListOptions extends ConstructorOptions {
 }
 
 export class List {
-    private readonly id?: number; // auto-increment ID
-    private title: string;
+    public readonly id?: number; // auto-increment ID
+    public title: string;
     public position: number;
-    private tasks: Array<Task>;
+    public tasks: Array<Task>;
 
     constructor(options: ConstructorOptions) {
         const { id, title, position, tasks } = options;

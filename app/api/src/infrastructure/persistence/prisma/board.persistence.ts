@@ -27,6 +27,9 @@ export class PrismaBoardPersistence implements BoardRepository {
             where: {
                 id,
             },
+            include: {
+                List: true,
+            }
         });
 
         if (!board) return null;

@@ -78,6 +78,7 @@ export class Board {
         return {
             id: this.id,
             title: this.title,
+            lists: this.lists,
             updatedAt: this.updatedAt,
         };
     }

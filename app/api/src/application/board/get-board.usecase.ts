@@ -14,8 +14,8 @@ export class GetBoardUseCase {
     public async execute(options: GetUserBoardsOptions) {
         const { boardId } = options;
 
-        const board = this.boardPersistence.findById(boardId);
-
+        const board = await this.boardPersistence.findById(boardId);
+        
         return board;
     }
 }

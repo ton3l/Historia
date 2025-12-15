@@ -11,6 +11,8 @@ export class AccountService {
             localStorage.setItem('token', response.data.token);
         }
 
+        window.location.reload();
+
         return response;
     }
 

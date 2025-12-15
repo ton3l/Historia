@@ -1,4 +1,5 @@
-import type { Board as PersistentBoard } from "@prisma/client";
+import { ListMapper } from '@infrastructure/persistence/prisma/mappers/list.mapper';
+import type { Board as PersistentBoard, List as PersistentList } from "@prisma/client";
 import { Board } from "@domain/core/board.entity";
 
 export class BoardMapper {
@@ -13,8 +14,17 @@ export class BoardMapper {
         };
     }
 
-    static toDomain(persistentBoard: PersistentBoard): Board {
-        const toDomoainBoard = { ...persistentBoard, updatedAt: new Date(persistentBoard.updated_at) };
-        return Board.restore(toDomoainBoard);
+    static toDomain(persistentBoard: PersistentBoard & { List?: PersistentList[] }): Board {
+        const lists = persistentBoard.List?.map((list) => ListMapper.toDomain(list));
+
+        const toDomoainBoard = { 
+            ...persistentBoard, 
+            updatedAt: new Date(persistentBoard.updated_at),
+            lists: lists 
+        };
+        
+        const board = Board.restore(toDomoainBoard);
+
+        return board;
     }
 }
