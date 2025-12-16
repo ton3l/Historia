@@ -1,26 +1,38 @@
-FROM oven/bun:latest
-
+FROM oven/bun:latest AS builder
 WORKDIR /app
 
-# 1. Copia os arquivos de dependência
 COPY package.json bun.lock ./
 COPY app/api/package.json ./app/api/
 COPY app/web/package.json ./app/web/
-# Se tiver packages compartilhados, copie também
 COPY packages/shared/types/package.json ./packages/shared/types/
 
-# 2. Instala APENAS dependências de produção (baixa Prisma/Argon2 versão Linux)
+RUN bun install
+
+COPY . .
+
+RUN bunx prisma generate --schema=./app/api/prisma/schema.prisma
+
+RUN bun run build
+
+FROM oven/bun:latest
+WORKDIR /app
+
+COPY package.json bun.lock ./
+COPY app/api/package.json ./app/api/
+COPY app/web/package.json ./app/web/
+COPY packages/shared/types/package.json ./packages/shared/types/
+
 RUN bun install --production
 
-# 3. Copia a pasta dist que você buildou no Windows (Backend + Frontend estático)
-COPY app/api/dist ./dist
+COPY --from=builder /app/app/api/dist ./dist
 
-# 4. Gera o cliente do Prisma (necessário para o binário Linux)
-COPY app/api/prisma ./app/api/prisma
-RUN cd app/api && bunx prisma generate
+COPY --from=builder /app/app/api/src/generated/client/*.node ./dist/query_engine.node
 
-ENV NODE_ENV=production
+ENV PRISMA_QUERY_ENGINE_LIBRARY="/app/dist/query_engine.node"
+
 ENV PORT=3000
+ENV NODE_ENV=production
+
 EXPOSE 3000
 
 CMD ["bun", "run", "dist/index.js"]
