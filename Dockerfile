@@ -1,36 +1,26 @@
-# Stage 1: Build
-FROM oven/bun:latest AS builder
-
-WORKDIR /app
-
-COPY package.json bun.lock ./
-COPY app/api/package.json ./app/api/
-COPY app/web/package.json ./app/web/
-COPY packages/shared/types/package.json ./packages/shared/types/
-
-RUN bun install
-
-COPY . .
-
-RUN bun run build
-
 FROM oven/bun:latest
 
 WORKDIR /app
 
-COPY --from=builder /app/app/api/dist ./dist
+# 1. Copia os arquivos de dependência
+COPY package.json bun.lock ./
+COPY app/api/package.json ./app/api/
+COPY app/web/package.json ./app/web/
+# Se tiver packages compartilhados, copie também
+COPY packages/shared/types/package.json ./packages/shared/types/
 
-# Atenção aos certificados SSL! 
-# Seu código lê 'private.pem' e 'certificate.pem' do __dirname.
-# Você precisará copiá-los para a imagem ou usar variáveis de ambiente/volumes.
-COPY app/api/src/infrastructure/server/config/*.pem ./dist/
+# 2. Instala APENAS dependências de produção (baixa Prisma/Argon2 versão Linux)
+RUN bun install --production
 
-# Define a variável de ambiente se necessário
-ENV PORT=3000
+# 3. Copia a pasta dist que você buildou no Windows (Backend + Frontend estático)
+COPY app/api/dist ./dist
+
+# 4. Gera o cliente do Prisma (necessário para o binário Linux)
+COPY app/api/prisma ./app/api/prisma
+RUN cd app/api && bunx prisma generate
+
 ENV NODE_ENV=production
-
-# Expõe a porta
+ENV PORT=3000
 EXPOSE 3000
 
-# Comando de execução (ajustado para o arquivo gerado pelo bun build)
 CMD ["bun", "run", "dist/index.js"]

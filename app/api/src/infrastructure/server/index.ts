@@ -42,7 +42,7 @@ export class API {
             res.sendFile(path.join(publicPath, 'index.html'))
         });
 
-        this.httpsServer.listen(this.port, () => {
+        this.app.listen(this.port, () => {
             const log = {
                 application: 'historia-api',
                 running_port: this.port,
