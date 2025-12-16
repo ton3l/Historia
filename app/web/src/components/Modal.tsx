@@ -28,6 +28,11 @@ function Modal({ handleOpen }: { handleOpen: [boolean, Dispatch<boolean>] }) {
                 <Header action={setOpen} />
                 <section className="z-0 flex flex-1 flex-col overflow-y-auto">
                     {
+                        boards.length === 0 && (
+                            <h2 className="m-auto text-neutral text-2xl">Log in to see your boards</h2>
+                        )
+                    }                    
+                    {
                         boards.map((board: BoardEntity) => (
                             <Board board={board} key={board.id} />
                         ))

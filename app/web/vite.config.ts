@@ -18,7 +18,8 @@ export default defineConfig({
         }
     },
     build: {
-        outDir: path.resolve(__dirname, '../api/dist'),  
+        outDir: path.resolve(__dirname, '..', 'api', 'dist', 'public'),
+        emptyOutDir: true
     },
     plugins: [react(), tailwind()],
 });

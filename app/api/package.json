@@ -4,6 +4,9 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "scripts": {
+    "build": " bun build ./src/index.ts --target bun --env inline --outdir ./dist --root ./src --production "
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/express": "^5.0.3",

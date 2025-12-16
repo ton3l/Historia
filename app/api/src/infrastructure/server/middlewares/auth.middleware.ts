@@ -7,6 +7,7 @@ export class Authentication {
     constructor(@inject('TokenProvider') private tokenProvider: TokenProvider) {}
 
     public handle = (req: Request, res: Response, next: NextFunction) => {
+        if (req.url)
         if (req.url === '/account/login' || req.url === '/account/signin' || req.url === '/') return next();
 
         const authHeader = req.headers.authorization;

@@ -41,7 +41,7 @@ export class BoardController {
         const boardId = (GetBoardValidator.parse(req.params)).id;
 
         const board = await this.getBoardUseCase.execute({ boardId });
-        console.log(board);
+  
         res.status(200).send({ board: board });
     };
 }

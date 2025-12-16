@@ -1,13 +1,9 @@
+import { CreateListValidator, ListIdValidator, UpdateListValidator } from '@server/validators/list.validators';
+import { GetListsByBoardUseCase } from '@application/list/get-lists-by-board.usecase';
 import { CreateListUseCase } from '@application/list/create-list.usecase';
 import { DeleteListUseCase } from '@application/list/delete-list.usecase';
-import { GetListsByBoardUseCase } from '@application/list/get-lists-by-board.usecase';
 import { UpdateListUseCase } from '@application/list/update-list.usecase';
 import { GetBoardValidator } from '@server/validators/board.validators';
-import {
-    CreateListValidator,
-    ListIdValidator,
-    UpdateListValidator,
-} from '@server/validators/list.validators';
 import type { Request, Response } from 'express';
 import { injectable } from 'tsyringe';
 

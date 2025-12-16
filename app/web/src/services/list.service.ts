@@ -6,12 +6,7 @@ export class ListService {
         return response;
     }
 
-    static async getAll() { // Criar método que recebe só nome e ID
-        const response = await api.get(`/board`);
-        return response;
-    }
-
-    static async get(id: string) { // Criar método que recebe só nome e ID
+    static async getTasks(id: number) {
         const response = await api.get(`/board/${id}`);
         return response;
     }

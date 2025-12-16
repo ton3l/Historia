@@ -3,7 +3,8 @@ import { ListService } from '@services/list.service';
 import { useParams } from '@tanstack/react-router';
 import type { Board as BoardEntity } from '@historia/types/board';
 import type { List as ListEntity } from '@historia/api/src/domain/core/list.entity';
-import { useEffect, useState } from "react";
+import type { Task as TaskEntity } from '@historia/api/src/domain/core/task.entity';
+import { useEffect, useState } from 'react';
 import { useNav } from '@hooks/NavProvider';
 
 function Board() {
@@ -28,41 +29,50 @@ function Board() {
 
     return (
         <main className="flex w-full gap-2 p-4">
-            <button 
+            <button
                 onClick={createList}
-                className={'absolute right-16 w-fit bg-accent p-3 rounded-full cursor-pointer transition-all ease-in-out duration-350 ' + (navVisibility ? 'visible bottom-18' : 'invisible bottom-[-64px]')}
+                className={
+                    'bg-accent fixed right-4 w-fit cursor-pointer rounded-full p-3 transition-all duration-350 ease-in-out ' +
+                    (navVisibility ? 'visible top-4' : 'invisible top-[-48px]')
+                }
+                title='add list'
             >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 16 16">
                     <path fill="#fff" d="M9 3a1 1 0 0 0-2 0v4H3a1 1 0 0 0 0 2h4v4a1 1 0 0 0 2 0V9h4a1 1 0 0 0 0-2H9z" />
                 </svg>
             </button>
 
-            {
-                board?.lists?.map((list) => (
-                    <List list={list} key={list.id} />
-                ))
-            }
+            {board?.lists?.map((list) => (
+                <List list={list} key={list.id} />
+            ))}
         </main>
     );
 }
 
 export default Board;
 
-function List({ list } : { list: ListEntity }) {
+function List({ list }: { list: ListEntity }) {
+    const [tasks, setTasks] = useState<TaskEntity[]>([]);
+    let taskeys = 0;
+    async function fetchTasks() {
+        const response = await ListService.getTasks(list.id!);
+        setTasks(response.data.tasks);
+    }
+
     return (
         <main className="flex w-full max-w-[calc(100dvw/4)] min-w-64 flex-1 flex-col gap-2">
             <header className="bg-primary flex items-center justify-between rounded-lg p-4">
                 <h1 className="text-neutral text-3xl"> {list.title} </h1>
-                <div className="bg-accent cursor-pointer rounded-full p-1">
+                <div className="bg-accent cursor-pointer rounded-full p-1" onClick={() => {setTasks([...tasks, {} as TaskEntity]);}}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 16 16">
                         <path fill="#fff" d="M9 3a1 1 0 0 0-2 0v4H3a1 1 0 0 0 0 2h4v4a1 1 0 0 0 2 0V9h4a1 1 0 0 0 0-2H9z" />
                     </svg>
                 </div>
             </header>
-            <ul className="px-8 py-2">
-                <li>
-                    <Task />
-                </li>
+            <ul className="flex flex-col px-8 py-2 gap-4">
+                {
+                    tasks?.map((task: TaskEntity) => ( <Task key={taskeys++} /> ))
+                }
             </ul>
         </main>
     );
@@ -80,7 +90,7 @@ function Task() {
     }
 
     return (
-        <main className="bg-primary text-neutral flex max-h-56 w-full min-w-48 flex-col items-center justify-between gap-1 rounded-lg px-4 py-1.5">
+        <li className="bg-primary text-neutral flex max-h-56 w-full min-w-48 flex-col items-center justify-between gap-1 rounded-lg px-4 py-1.5">
             <header className="flex w-full items-center justify-between">
                 <h2 className="text-2xl">Title</h2>
                 <section className="flex flex-col items-center justify-between">
@@ -101,9 +111,17 @@ function Task() {
             <section className="flex w-full items-center gap-2">
                 <Tag />
             </section>
-            <article className={"line-clamp-5 text-justify transition-[max-height] ease-in-out duration-400 " + (extended ? "max-h-32" : "max-h-0")}>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequatur commodi illo doloremque, quo eveniet quam quidem necessitatibus perspiciatis amet temporibus ipsum. Vel ea est in similique quo! Consequuntur, repellendus minus?
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequatur commodi illo doloremque, quo eveniet quam quidem necessitatibus perspiciatis amet temporibus ipsum. Vel ea est in similique quo! Consequuntur, repellendus minus?
+            <article
+                className={
+                    'line-clamp-5 text-justify transition-[max-height] duration-400 ease-in-out ' +
+                    (extended ? 'max-h-32' : 'max-h-0')
+                }
+            >
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequatur commodi illo doloremque, quo eveniet quam
+                quidem necessitatibus perspiciatis amet temporibus ipsum. Vel ea est in similique quo! Consequuntur, repellendus
+                minus? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequatur commodi illo doloremque, quo eveniet
+                quam quidem necessitatibus perspiciatis amet temporibus ipsum. Vel ea est in similique quo! Consequuntur,
+                repellendus minus?
             </article>
             <ul className="flex w-full items-center gap-1 self-start overflow-x-clip [mask-image:linear-gradient(to_left,transparent,black_50px)]">
                 <li className="h-5 w-5 shrink-0 rounded-full bg-gray-500"></li>
@@ -119,14 +137,10 @@ function Task() {
                 <li className="h-5 w-5 shrink-0 rounded-full bg-gray-500"></li>
                 <li className="h-5 w-5 shrink-0 rounded-full bg-gray-500"></li>
             </ul>
-        </main>
+        </li>
     );
 }
 
 function Tag() {
-    return (
-        <main className="px-1.5 pb-0.5 bg-gray-400 text-white text-xs rounded-xs font-semibold">
-            Testing
-        </main>
-    );
+    return <main className="rounded-xs bg-gray-400 px-1.5 pb-0.5 text-xs font-semibold text-white">Testing</main>;
 }
